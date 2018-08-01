@@ -1,0 +1,46 @@
+#title {
+  color:blue;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+#button{
+  text-align: right;
+}
+
+.grow:hover {
+  position:relative;
+  width: 55%;
+  height: 55%;
+  transition: 2s;
+}
+
+h1 {
+  color:black;
+  font-size: 24px;
+}
+
+h2 {
+  color:black;
+  font-size: 22px;
+}
+
+h3 {
+  color:black;
+  font-size: 20px;
+}
+
+h4 {
+  color:black;
+  font-size: 18px;
+}
+
+h4 {
+  color:black;
+  font-size: 16px;
+}
+
+h6 {
+  color:black;
+  font-size: 14px;
+}
