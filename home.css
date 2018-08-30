@@ -1,0 +1,195 @@
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  /* max-width: 300px; */
+  position: relative;
+  margin: auto;
+  padding-top: 25px;
+}
+/* create/make account link styling  */
+
+
+.mySlides > img {
+  max-height: 250px;
+  object-fit: cover;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+.first {
+  display: inline;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 16px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+
+body {
+  background-image:url(pinkbrick.jpg);
+  background-color:rgba(255,255,255,0.6);
+}
+
+.affirmation{
+  color:#CD5C5C;
+  font-size:60px;
+  font-family: "Kalam";
+  font-weight:bold;
+  animation:blinkingText 3s infinite;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  text-align: center;
+
+}
+#life{
+  color:#CD5C5C;
+  font-size: 60px;
+  font-family: "Kalam";
+  font-weight:bold;
+  animation:blinkingText 3s infinite;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  text-align: center;
+
+}
+@keyframes blinkingText{
+    0%{     color: black;    }
+    49%{    color: 	white; }
+    50%{    color: 	black; }
+    99%{    color:	white;  }
+    100%{   color: black;    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#sentence{
+  text-align: center;
+  font-style: italic;
+  font-size: 60pt;
+
+}
+.column {
+  /* padding-top: 100px */
+  /* padding: 10px; */
+  display:block;
+  margin-left: 370px;
+  margin-right: auto;
+  width:50%;
+  padding-bottom: 100px;
+
+}
+
+footer{
+  background-color:rgba(255, 99, 71, 0.5);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#sentence {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 20px;
+  border: none;
+  font: normal 60px/1 "Monoton", Helvetica, sans-serif;
+  color:#C71585;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 10px rgb(255,255,255) , 0 0 20px rgb(255,255,255) , 0 0 30px rgb(255,255,255) , 0 0 40px rgb(255,17,119) , 0 0 70px rgb(255,17,119) , 0 0 80px rgb(255,17,119) , 0 0 100px rgb(255,17,119) , 0 0 150px rgb(255,17,119) ;
+  -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  font-size:  50px;
+}
+
+#sentence:hover {
+  text-shadow: 0 0 5px black , 0 0 10px black , 0 0 15px black , 0 0 20px black , 0 0 35px black , 0 0 40px black , 0 0 50px black, 0 0 75px black ;
+}

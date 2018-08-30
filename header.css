@@ -1,0 +1,105 @@
+/* The navigation bar */
+.navbar {
+  background-color: transparent;
+  width: 100%; /* Full width */
+  display: flex;
+  align-items: flex-end;
+}
+
+.logo {
+  padding-left: 30px;
+  height: 130px;
+}
+
+.profileManagement {
+  font-size: 18px;
+  float: right;
+  text-align: center;
+  font-family: "Kalam";
+  font-weight: bold;
+}
+
+.header {
+  display: flex;
+}
+
+/* Link boxes inside the navbar */
+.navbar a {
+    color: black;
+    text-decoration: None;
+    font-weight: bold;
+    font-size: 35px;
+    font-family: "Kalam";
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 16px;
+}
+/* Change background on mouse-over */
+/* .navbar a:hover {
+    background: 	#EDCDE5;
+} */
+
+
+.navbar a:hover:after,
+.navbar a:focus:after {
+  transform: scaleX(1);
+}
+
+.navbar a:after {
+  content: "";
+  display: block;
+  position: relative;
+  top: 10px;
+  width: 100%;
+  height: 3px;
+  box-shadow: 0 0 10px 2px #FFEB00;
+  border-radius: 5px;
+  transform: scaleX(0);
+  transition: .25s linear;
+}
+
+#createAccount:hover, #signIn:hover {
+text-decoration:none;
+text-shadow: 0 0 2px #999;
+}
+
+#createAccount:hover span, #signIn:hover span { cursor: pointer }
+
+#createAccount:active, #signIn:active { padding-top: 2px; }
+
+#createAccount, #signIn {
+  color: #FF4395;
+  padding: 5px; }
+
+/* nav ul { */
+  /* list-style: none; */
+  /* font-size: 2em; */
+/* }
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li a {
+  position:relative;
+  text-decoration: none;
+  color: #999999;
+  margin: 20px;
+  padding-top: 10px;
+  padding-right: 10px;
+  border-top: 3px solid firebrick;
+  }
+
+  nav ul li a:after {
+    content:"";
+    display: inline-block;
+    position: absolute;
+    left: 0px;
+    bottom: -10px;
+    background-color: firebrick;
+    width: 0;
+    height: 3px;
+    transition: all 0.4s;
+} */

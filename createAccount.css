@@ -1,0 +1,9 @@
+body{
+  background-image: url(br.jpg);
+  font-family: "Bree Serif";
+}
+
+.text{
+  text-align: center;
+  vertical-align: center;
+}
