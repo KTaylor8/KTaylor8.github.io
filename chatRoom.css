@@ -1,34 +1,21 @@
-div {
-  background-color: none;
+* {
+  box-sizing: border-box;
+  padding-right: 2px;
 }
 
-footer {
-  border: 2px solid 	#8B008B;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: 	#FFE4B5;
-  color: white;
-  text-align: center;
-  padding-top: 10px;
-}
-
-footer:focus {
-    outline: none;
-    border-color: #9ecaed;
-    box-shadow: 0 0 10px #9ecaed;
+body {
+ min-height: 450px;
+ background-color:		#FFE4E1;
+ height: 100vh;
+ margin: 0;
+ background: radial-gradient(circle, darken(dodgerblue, 10%), #1f4f96, #1b2949, #000);
+ background-image:url(images/plaid.jpg);
 }
 
 #PostTitle {
   color:black;
   font-size: 25px;
   font-family: "Abril Fatface";
-}
-
-* {
-  box-sizing: border-box;
-  padding-right: 2px;
 }
 
 #forumTitle {
@@ -74,24 +61,12 @@ footer:focus {
   float: right;
   display: none;
 }
-/* .fillerText {
-  border-style: solid;
-  padding:20px;
-  font-family: "Lato", sans-serif;
-  border-radius: 25px;
-} */
 
 .chatMessage {
   border-style: solid;
   padding:20px;
   border-radius: 25px;
 }
-
-/* #second {
-  border-style: solid;
-  padding:20px;
-  border-radius: 25px;
-} */
 
 .commentListBox {
   border-style: solid;
@@ -234,13 +209,6 @@ button {
   cursor: pointer;
 }
 
-body {
- min-height: 450px;
- background-color:		#FFE4E1;
- height: 100vh;
- margin: 0;
- background: radial-gradient(circle, darken(dodgerblue, 10%), #1f4f96, #1b2949, #000);
-}
 .comments{
   padding: 20px;
   font-weight:bold;
@@ -294,6 +262,25 @@ body {
     padding: 30px;
     padding-bottom: 30px;
   }
-  @import url('//fonts.googleapis.com/css?family=Pacifico&text=Pure');
+
+@import url('//fonts.googleapis.com/css?family=Pacifico&text=Pure');
 @import url('//fonts.googleapis.com/css?family=Roboto:700&text=css');
 @import url('//fonts.googleapis.com/css?family=Kaushan+Script&text=!');
+
+.chatrFooter {
+  border: 2px solid 	#8B008B;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: 	#FFE4B5;
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.chatrFooter:focus {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}

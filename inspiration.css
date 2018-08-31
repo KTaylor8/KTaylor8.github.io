@@ -1,32 +1,5 @@
-/* .column img {
-  height: 350px;
-  width: 300px;
-  display: block;
-  margin-left: auto;
-   margin-right: auto;
-
-} */
-
-/* .row {
-  max-width: 300px;
-  max-height: 400px;
-  padding-left: 65px;
-  object-fit:scale-down; */
-    /* display: flex; */
-  /* overflow: hidden; */
-  /* flex-wrap: wrap;
-  padding: 0 4px; */
-/* } */
-
-/* Create four equal columns that sits next to each other */
+/* to do: create four equal columns that sit next to each other */
 .column {
-  /* flex: 25%;
-  max-width: 70%;
-  padding: 0 25px; */
-  /* display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-evenly; */
   width: 50%;
 }
 
@@ -37,16 +10,13 @@
   margin-top: 20px;
   vertical-align: middle;
   border-radius:25px;
-  /* border-top-left-radius:25px; */
-  /* max-width: 50%; */
 }
 
 .hiddenImage {
   display:none;
 }
 
-
-footer {
+.inspirationFooter {
   border-style:solid;
   border-color: #5F9EA0;
   position: fixed;

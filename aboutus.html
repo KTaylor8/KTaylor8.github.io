@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="aboutus.css" type="text/css">
-    <link rel = "stylesheet" type = "text/css" href = "header.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Passero%20One" rel="stylesheet" type="text/css"/>
-    <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Abril Fatface' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Butterfly Kids' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Sansita' rel='stylesheet'>
-    <link rel="shortcut icon" type="image/png" href="images/finallips.png"/>
-    <title>Chatr - About Us</title>
-  </head>
+
+<head>
+  <!--page setup stuff common to all pages (w/ different page title)-->
+  <title>Chatr - About Us</title>
+  <link rel="shortcut icon" type="image/png" href="images/finallips.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--importing stylesheets common to most pages-->
+  <link rel="stylesheet" href="importFonts.css" type="text/css">
+  <link rel = "stylesheet" type = "text/css" href = "profileAccess.css"/>
+  <link rel = "stylesheet" type = "text/css" href = "header.css"/>
+  <link rel = "stylesheet" type = "text/css" href = "footer.css"/>
+  <!--CSS & JS specific to this page-->
+  <link rel="stylesheet" href="aboutUs.css" type="text/css">
+
+</head>
+
+<body>
+
   <div class = "profileManagement">
     <a id="createAccount" href="createAccount.html">New Account</a><br>
     <a>or</a><br>
     <a id="signIn" href="signIn.html">Sign In</a><br>
   </div>
+
   <div class = "header">
     <img class = "logo" src="images/ChatrCropped.png" alt="Chatter logo" >
     <div class="navbar">
       <a href="chatrIndex.html">Home</a>  <!--need to put in link urls-->
-      <a href="chatr.html">Chat Room</a>
-      <a href="Inspirationboard.html">Inspiration</a>
-      <a href="aboutus.html">About Us</a>
+      <a href="chatRoom.html">Chat Room</a>
+      <a href="inspiration.html">Inspiration</a>
+      <a href="aboutUs.html">About Us</a>
     </div>
   </div>
-  <body>
-    <div class="row">
-  <div class="column">
-    <h2>Katie<br>Taylor</h2>
-    <p><a class = "contactInfo" href="https://www.linkedin.com/in/katiemxtaylor">LinkedIn: https://www.linkedin.com/in/katiemxtaylor</a></p>
-  </div>
-  <div class="column">
-    <h2>Lucy<br>Tran</h2>
-    <p><a class = "contactInfo" href="mailto:00tranluc@gmail.com">My gmail:<br>00tranluc@gmail.com</a></p>
-    <div><a class = "contactInfo" href="https://www.linkedin.com/in/tranlucy">LinkedIn: https://www.linkedin.com/in/tranluc</a></div>
-  </div>
-  <div class="column">
-    <h2>Soowan<br>Park</h2>
-    <p><a class = "contactInfo" href="mailto:soowanp@gmail.com">My gmail:<br>soowanp@gmail.com</a></p>
-  </div>
-  <div class="column">
-    <h2>Viktoriya<br>Kovachyk</h2>
-    <p><a class = "contactInfo" href="mailto:chansonqueenviktoriya1900@gmail.com">My gmail: chansonqueenviktoriya1900@gmail.com</a></p>
-  </div>
-</div>
 
-  </body>
+  <div class="row">
+    <div class="column">
+      <h2>Katie<br>Taylor</h2>
+      <p><a class = "contactInfo" href="https://www.linkedin.com/in/katiemxtaylor">LinkedIn: https://www.linkedin.com/in/katiemxtaylor</a></p>
+    </div>
+    <div class="column">
+      <h2>Lucy<br>Tran</h2>
+      <p><a class = "contactInfo" href="mailto:00tranluc@gmail.com">My gmail:<br>00tranluc@gmail.com</a></p>
+      <div><a class = "contactInfo" href="https://www.linkedin.com/in/tranlucy">LinkedIn: https://www.linkedin.com/in/tranluc</a></div>
+    </div>
+    <div class="column">
+      <h2>Soowan<br>Park</h2>
+      <p><a class = "contactInfo" href="mailto:soowanp@gmail.com">My gmail:<br>soowanp@gmail.com</a></p>
+    </div>
+    <div class="column">
+      <h2>Viktoriya<br>Kovachyk</h2>
+      <p><a class = "contactInfo" href="mailto:chansonqueenviktoriya1900@gmail.com">My gmail: chansonqueenviktoriya1900@gmail.com</a></p>
+    </div>
+  </div>
+  <p class = "contactInfo" style = "font-size: 20px">Our site's backgrounds were provided by The Pattern Library by Tim Holman and Claudio Guglieri.</p>
+
+  <footer class = "chatrFooter">
+    <div>2018 Chatr</div>
+    <div>Created by Katie, Soowan, Viktoriya, and Lucy</div>
+  </footer>
+
+</body>
+
 </html>

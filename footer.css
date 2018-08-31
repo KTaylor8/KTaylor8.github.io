@@ -1,0 +1,7 @@
+ .chatrFooter {
+  font-family: "Sansita";
+  background-color:#A346B6;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}

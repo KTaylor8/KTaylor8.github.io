@@ -1,14 +1,18 @@
-* {box-sizing:border-box}
+/* "*" selects all elements and if you put a tag before the *, it selects all elements within that tag */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image:url(images/jade.jpg);
+}
 
 /* Slideshow container */
 .slideshow-container {
-  /* max-width: 300px; */
   position: relative;
   margin: auto;
   padding-top: 25px;
 }
-/* create/make account link styling  */
-
 
 .mySlides > img {
   max-height: 250px;
@@ -104,14 +108,8 @@
   to {opacity: 1}
 }
 
-
-body {
-  background-image:url(pinkbrick.jpg);
-  background-color:rgba(255,255,255,0.6);
-}
-
 .affirmation{
-  color:#CD5C5C;
+  color: #A346B6;
   font-size:60px;
   font-family: "Kalam";
   font-weight:bold;
@@ -122,61 +120,37 @@ body {
   bottom: 100px;
   width: 100%;
   text-align: center;
-
 }
-#life{
-  color:#CD5C5C;
-  font-size: 60px;
-  font-family: "Kalam";
-  font-weight:bold;
-  animation:blinkingText 3s infinite;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 100px;
-  width: 100%;
-  text-align: center;
 
-}
 @keyframes blinkingText{
-    0%{     color: black;    }
-    49%{    color: 	white; }
-    50%{    color: 	black; }
-    99%{    color:	white;  }
-    100%{   color: black;    }
+  /* must be structured in 4 steps like this in order to have smooth transitions and even timing*/
+      0%{     color: transparent; }
+      33%{     color: #A346B6; }
+      67%{     color: #A346B6; }
+      100%{     color: transparent; }
 }
 
-* {
-    box-sizing: border-box;
-}
-
-#sentence{
-  text-align: center;
-  font-style: italic;
-  font-size: 60pt;
-
-}
-.column {
-  /* padding-top: 100px */
-  /* padding: 10px; */
-  display:block;
-  margin-left: 370px;
-  margin-right: auto;
-  width:50%;
-  padding-bottom: 100px;
-
-}
-
-footer{
-  background-color:rgba(255, 99, 71, 0.5);
-  padding: 10px;
+.belowSlideshow  {
+  margin: auto;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 40px;
 }
-#sentence {
+
+.belowSlideshow img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#SWDC {
+  font-style: italic;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  padding: 20px;
+  padding: 50px;
   border: none;
   font: normal 60px/1 "Monoton", Helvetica, sans-serif;
   color:#C71585;
@@ -188,9 +162,8 @@ footer{
   -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
   -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
   transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
-  font-size:  50px;
 }
 
-#sentence:hover {
+#SWDC:hover {
   text-shadow: 0 0 5px black , 0 0 10px black , 0 0 15px black , 0 0 20px black , 0 0 35px black , 0 0 40px black , 0 0 50px black, 0 0 75px black ;
 }
