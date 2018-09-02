@@ -55,9 +55,9 @@
         </div>
         <div class="postAndComments">
           <div class="post">
-            <p id="textSpace0"></p>
-            <span class='material-icons' class='thumbsUpButton' id='like0'>thumb_up</span>
-            <span class='material-icons' class='thumbsDownButton' id='dislike0'>thumb_down</span>
+            <a id="textSpace0"></a>
+            <span class='material-icons  thumbsUpButton' id='like0'>thumb_up</span>
+            <span class='material-icons  thumbsDownButton' id='dislike0'>thumb_down</span>
           </div>
           <p></p>
           <!--comments box-->
@@ -65,8 +65,8 @@
             <div class="comments">Comment on this post</div>
             <input class="commentBox" type="text" id="commentBox0" placeholder="Type a comment...">
             <button class="sendButton" onclick="sendComments0(0)">Send Comment</button>
-            <span><button class='material-icons' class='thumbsUpButton' onclick="thumbsUp0(0)">thumb_up</button></span>
-            <span><button class='material-icons' class='thumbsDownButton' onclick="thumbsDown0(0)">thumb_down</button></span>
+            <span><button class='material-icons  thumbsUpButton' onclick="thumbsUp(0)">thumb_up</button></span>
+            <span><button class='material-icons  thumbsDownButton' onclick="thumbsDown(0)">thumb_down</button></span>
             <p></p>
           </div>
           <!-- close postAndComments div -->
@@ -75,46 +75,11 @@
       </div>
 
       <!--2nd post-->
-      <div class="row">
-        <div id="postBox2" class="postBoxes">
-          <div id="user">
-            <img class="userimage" src="images/minion2.jpg">
-            <div class="usernames">user_1</div>
-          </div>
-          <div id="textcolumn">
-            <div id="textbox">
-              <span id="downicon2" class="dropdown">
-                <button class="circleButtons"></button>
-                <!-- <img class="dropdown-content" src="images/boo.gif"> -->
-              </span>
-              <span id="thumbicon2" class="dropdown">
-                <button class="circleButtons" style="font-size:25px;color:green;"></button>
-                <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
-              </span>
-              <p id="textSpace2"></p>
-            </div>
-            <p></p>
-            <!--comments box 2-->
-            <div id="commentList2" class="commentListBox">
-              <div class="comments">Comment on this post</div>
-              <input class="sendButton" type="text" id="myComment2" name="text" placeholder="Type in a comment...">
-              <button class="sendButton" onclick="comment2()">Send</button>
-              <span onclick="thumbsup2()" class="dropdown">
-                <button class="circleButtons" style="font-size:25px;color:green;"></button>
-                <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
-              </span>
-              <span onclick="thumbsdown2()" class="dropdown">
-                <button class="circleButtons"></button>
-                <!-- <img class="dropdown-content" src="images/boo.gif"> -->
-              </span>
-              <p></p>
-              <button class="three" style="font-size:30px;color:red;"></i></button>
-              <button class="three" style="font-size:30px;color:blue;"></i></button>
-              <button class="three" style="font-size:30px;color:green;"></button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+
+
+
+
       <!--closes the div that separates the forums from the header-->
     </div>
     <!-- closes the content class div -->
@@ -129,9 +94,9 @@
       <a id="postTitle">Post</a>
       <input type="text" id="enteredPost" name="text" placeholder="Enter your own post...">
       <button onclick="post()">Send Post</button>
-      <span><button class='material-icons' id='commentMicButton' onclick="uploadRecording()">mic</button></span>
-      <span><button class='material-icons' id='commentPicButton' onclick="uploadPic()">insert_photo</button></span>
-      <span><button class='material-icons' id='commentLinkButton' onclick="uploadLink()">insert_link</button></span>
+      <span><button class='material-icons' id='postMicButton' onclick="uploadRecording()">mic</button></span>
+      <span><button class='material-icons' id='postPicButton' onclick="uploadPic()">insert_photo</button></span>
+      <span><button class='material-icons' id='postLinkButton' onclick="uploadLink()">insert_link</button></span>
     </div>
     <div class="forumTopicsList">
       <div id="forumTopicsListTitle">Forums:</div>
