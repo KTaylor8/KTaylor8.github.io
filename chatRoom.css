@@ -143,6 +143,9 @@ body {
 }
 
 .sidenav {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   width: 208px;
   font-family: "Oleo Script";
   position: fixed;
@@ -262,12 +265,12 @@ button {
     padding: 30px;
     padding-bottom: 30px;
   }
-
+}
 @import url('//fonts.googleapis.com/css?family=Pacifico&text=Pure');
 @import url('//fonts.googleapis.com/css?family=Roboto:700&text=css');
 @import url('//fonts.googleapis.com/css?family=Kaushan+Script&text=!');
 
-.chatrFooter {
+#postFooter {
   border: 2px solid 	#8B008B;
   position: fixed;
   left: 0;
@@ -279,7 +282,7 @@ button {
   padding-top: 10px;
 }
 
-.chatrFooter:focus {
+#postFooter:focus {
     outline: none;
     border-color: #9ecaed;
     box-shadow: 0 0 10px #9ecaed;
