@@ -1,9 +1,20 @@
-body{
+html,
+body {
+  height: 100%;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+body {
   background-image: url(images/green.jpg);
+  display: flex;
+  flex-direction: column;
   font-family: "Bree Serif";
 }
 
-.text{
+.text {
   text-align: center;
   vertical-align: center;
 }

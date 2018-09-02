@@ -1,3 +1,30 @@
+html,
+body {
+  height: 100%;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+body {
+  background-color: #e6e6fa;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  position: fixed;
+  top: 158px;
+  left: 5px;
+  font-family: "Salsa";
+  font-size: 16px;
+  background-color: rgb(117, 192, 226);
+  border-color: rgb(25, 240, 255);
+  border-width: 4px;
+  padding: 10px;
+}
+
 /* to do: create four equal columns that sit next to each other */
 .column {
   width: 50%;
@@ -9,26 +36,11 @@
   margin-left: 80px;
   margin-top: 20px;
   vertical-align: middle;
-  border-radius:25px;
+  border-radius: 25px;
 }
 
 .hiddenImage {
-  display:none;
-}
-
-.inspirationFooter {
-  border-style:solid;
-  border-color: #5F9EA0;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #DDDDDD;
-  text-align: center;
-}
-
-body{
-  background-color: 		#E6E6FA;
+  display: none;
 }
 
 /* Responsive layout - makes a two column-layout instead of four columns */

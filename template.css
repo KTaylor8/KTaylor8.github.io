@@ -1,0 +1,16 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1 0 auto;
+}
+/* change name below to match that of the footer you want
+to stick at the bottom of the page */
+footer {
+  flex-shrink: 0;
+}

@@ -4,6 +4,9 @@
   text-align: center;
   font-family: "Kalam";
   font-weight: bold;
+  background-image: repeating-radial-gradient(white,  gold);
+  border-radius: 25px; 
+  padding: 10px;
 }
 
 /* changing color of create account and sign in links */

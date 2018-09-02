@@ -19,182 +19,136 @@
 
 </head>
 
-<body style="padding-bottom: 2000px;">
-
-  <div class="profileManagement">
-    <a id="createAccount" href="createAccount.html">New Account</a><br>
-    <a>or</a><br>
-    <a id="signIn" href="signIn.html">Sign In</a><br>
-  </div>
-
-  <div class="header">
-    <img class="logo" src="images/ChatrCropped.png" alt="Chatter logo">
-    <div class="navbar">
-      <a href="chatrIndex.html">Home</a>
-      <a href="chatRoom.html">Chat Room</a>
-      <a href="inspiration.html">Inspiration</a>
-      <a href="aboutUs.html">About Us</a>
+<body>
+  <div class='content'>
+    <div class="profileManagement">
+      <a id="createAccount" href="createAccount.html">New Account</a><br>
+      <a>or</a><br>
+      <a id="signIn" href="signIn.html">Sign In</a><br>
     </div>
-  </div>
 
-  <!--the row with the forum title and survey-->
-  <div class="forumHeader">
-    <div class="forumHeaderText">
-      <p id="forumTitle">General Forum</p>
-      <p id="noPosts">There are no posts yet. Add one via the box at the bottom.</p>
+    <div class="header">
+      <img class="logo" src="images/ChatrCropped.png" alt="Chatter logo">
+      <div class="navbar">
+        <a href="chatrIndex.html">Home</a>
+        <a href="chatRoom.html">Chat Room</a>
+        <a href="inspiration.html">Inspiration</a>
+        <a href="aboutUs.html">About Us</a>
+      </div>
     </div>
-    <!--suggestion survey-->
-    <div class="survey">
-      <div class="dropdown">
-        <span class="material-icons" style="font-size:36px; padding-top:5px; padding-left: 5px; margin-left: auto; margin-right: auto;color:white;font-size:80px;">developer_board</span>
-        <div class="dropdown-content">
-          <p> Click the link below to suggest new forum topics!</p>
+
+    <div class="forum">
+
+      <!--the row with the forum title-->
+      <div class="forumHeader">
+        <div class="forumHeaderText">
+          <p id="forumTitle">General Forum</p>
+          <p id="noPosts">There are no posts yet. Add one via the box at the bottom.</p>
         </div>
       </div>
-      <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSetuyt_grz53fNgZhr5Bq1KWreBKpjCT5vSx2xK2xH9D2fP1g/viewform">Suggest
-          topics</a></p>
-    </div>
-  </div>
 
-  <!--first post-->
-  <div class="forum">
-    <div class="row">
-      <div id="postBox1" class="postBoxes">
+      <!--first post. perfect this one before copying/pasting it and changing the numbers to make more-->
+      <div id="postBox0" class="postBoxes">
         <div id="user">
           <img class="userimage" src="images/minion2.jpg">
-          <div class="usernames">user_1</div>
+          <div class="usernames">User_1</div>
         </div>
-        <div id="textcolumn">
-          <div id="textbox">
-            <span id="downicon1" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:red;"><i class="fa fa-thumbs-down"></i></button>
-              <!-- <img class="dropdown-content" src="images/boo.gif"> -->-->
-            </span>
-            <span id="thumbicon1" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:green;"><i class="fa fa-thumbs-up"></i></button>
-              <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
-            </span>
-            <p id="textSpace1"></p>
+        <div class="postAndComments">
+          <div class="post">
+            <p id="textSpace0"></p>
+            <span class='material-icons' class='thumbsUpButton' id='like0'>thumb_up</span>
+            <span class='material-icons' class='thumbsDownButton' id='dislike0'>thumb_down</span>
           </div>
           <p></p>
           <!--comments box-->
-          <div id="commentList1" class="commentListBox">
+          <div id="commentList0" class="commentListBox">
             <div class="comments">Comment on this post</div>
-            <input class="button1" type="text" id="myComment1" name="text" placeholder="Type in a comment...">
-            <button style="font-weight:bold;" class="button1" onclick="comment1()">Send</button>
-            <span onclick="thumbsup1()" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:green;"><i class="fa fa-thumbs-up"></i></button>
-              <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
-            </span>
-            <span onclick="thumbsdown1()" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:red;"><i class="fa fa-thumbs-down"></i></button>
-              <!-- <img class="dropdown-content" src="images/boo.gif"> -->
-            </span>
+            <input class="commentBox" type="text" id="commentBox0" placeholder="Type a comment...">
+            <button class="sendButton" onclick="sendComments0(0)">Send Comment</button>
+            <span><button class='material-icons' class='thumbsUpButton' onclick="thumbsUp0(0)">thumb_up</button></span>
+            <span><button class='material-icons' class='thumbsDownButton' onclick="thumbsDown0(0)">thumb_down</button></span>
             <p></p>
-            <div class="dropdown">
-              <button class="three" style="font-size:30px;color:red;"><i class="fa fa-microphone"></i></button>
-              <div class="dropdown-content">
-                <!-- <img src="images/recordbutton.gif"> -->
-              </div>
-            </div>
-            <div class="dropdown">
-              <button class="three" style="font-size:30px;color:blue;"> <i class="fa fa-camera"></i></button>
-              <div class="dropdown-content">
-                <!-- <img src="images/pose.gif"> -->
-              </div>
-            </div>
-            <div class="dropdown">
-              <button class="three" style="font-size:30px;color:green;"><i class="material-icons">attachment</i></button>
-              <div class="dropdown-content">
-                <!-- <img src="images/click.gif"> -->
-              </div>
-            </div>
           </div>
+          <!-- close postAndComments div -->
         </div>
+        <!-- close div housing first post -->
       </div>
 
-    </div>
-
-    <!--2nd post-->
-    <div class="row">
-      <div id="postBox2" class="postBoxes">
-        <div id="user">
-          <img class="userimage" src="images/minion2.jpg">
-          <div class="usernames">user_1</div>
-        </div>
-        <div id="textcolumn">
-          <div id="textbox">
-            <span id="downicon2" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:red;"><i class="fa fa-thumbs-down"></i></button>
-              <!-- <img class="dropdown-content" src="images/boo.gif"> -->
-            </span>
-            <span id="thumbicon2" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:green;"><i class="fa fa-thumbs-up"></i></button>
-              <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
-            </span>
-            <p id="textSpace2"></p>
+      <!--2nd post-->
+      <div class="row">
+        <div id="postBox2" class="postBoxes">
+          <div id="user">
+            <img class="userimage" src="images/minion2.jpg">
+            <div class="usernames">user_1</div>
           </div>
-          <p></p>
-          <!--comments box 2-->
-          <div id="commentList2" class="commentListBox">
-            <div class="comments">Comment on this post</div>
-            <input class="button1" type="text" id="myComment2" name="text" placeholder="Type in a comment...">
-            <button style="font-weight:bold;" class="button1" onclick="comment2()">Send</button>
-            <span onclick="thumbsup2()" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:green;"><i class="fa fa-thumbs-up"></i></button>
-              <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
-            </span>
-            <span onclick="thumbsdown2()" class="dropdown">
-              <button class="circle1" style="font-size:25px;color:red;"><i class="fa fa-thumbs-down"></i></button>
-              <!-- <img class="dropdown-content" src="images/boo.gif"> -->
-            </span>
+          <div id="textcolumn">
+            <div id="textbox">
+              <span id="downicon2" class="dropdown">
+                <button class="circleButtons"></button>
+                <!-- <img class="dropdown-content" src="images/boo.gif"> -->
+              </span>
+              <span id="thumbicon2" class="dropdown">
+                <button class="circleButtons" style="font-size:25px;color:green;"></button>
+                <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
+              </span>
+              <p id="textSpace2"></p>
+            </div>
             <p></p>
-            <button class="three" style="font-size:30px;color:red;"><i class="fa fa-microphone"></i></button>
-            <button class="three" style="font-size:30px;color:blue;"> <i class="fa fa-camera"></i></button>
-            <button class="three" style="font-size:30px;color:green;"><i class="material-icons">attachment</i></button>
+            <!--comments box 2-->
+            <div id="commentList2" class="commentListBox">
+              <div class="comments">Comment on this post</div>
+              <input class="sendButton" type="text" id="myComment2" name="text" placeholder="Type in a comment...">
+              <button class="sendButton" onclick="comment2()">Send</button>
+              <span onclick="thumbsup2()" class="dropdown">
+                <button class="circleButtons" style="font-size:25px;color:green;"></button>
+                <!-- <img class="dropdown-content" src="images/thumbup.gif"> -->
+              </span>
+              <span onclick="thumbsdown2()" class="dropdown">
+                <button class="circleButtons"></button>
+                <!-- <img class="dropdown-content" src="images/boo.gif"> -->
+              </span>
+              <p></p>
+              <button class="three" style="font-size:30px;color:red;"></i></button>
+              <button class="three" style="font-size:30px;color:blue;"></i></button>
+              <button class="three" style="font-size:30px;color:green;"></button>
+            </div>
           </div>
         </div>
       </div>
+      <!--closes the div that separates the forums from the header-->
     </div>
-    <!--closes the div that separates the forums from the header-->
+    <!-- closes the content class div -->
+  </div>
 
-<<<<<<< HEAD
-    <footer class = "chatRoomFooter">
-=======
-    <footer id = "postFooter">
->>>>>>> fb8e43ec690947489207236eaee00bd76c68c0eb
-      <div>
-        <a id="PostTitle" style="padding-right: 65px; color: purple;">Post</a>
-        <input type="text" id="enteredPost" name="text" placeholder="Enter your own post...">
-        <button onclick="post()" style="font-weight:bold;">Send Text</button>
-        <button onclick="record()" style="font-weight:bold;">Record</button>
-        <button onclick="image()" style="font-weight:bold;">Image</button>
-        <button onclick="link()" style="font-weight:bold;">Link</button>
-      </div>
-      <div class="search-container" align="right">
-        <form action="/action_page.php">
-          <input type="text" placeholder="#hashtag" name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-      </div>
-      <div class="sidenav">
-        <div style="text-decoration: underline; color: black; font-size: 24px; font-weight: bold;">Forum Topics</div>
-        <a href="#relationships">Relationships</a>
-        <a href="#friends&family">Friends & Family</a>
-        <a href="#beauty">Beauty</a>
-        <a href="#misc">Miscellaneous</a>
-      </div>
-    </footer>
-<<<<<<< HEAD
+  <footer class="chatrFooter">
+    <div>2018 Chatr</div>
+  </footer>
 
-    <footer class = "chatrFooter">
-=======
-    <footer class="chatrFooter">
->>>>>>> fb8e43ec690947489207236eaee00bd76c68c0eb
-      <div>2018 Chatr</div>
-      <div>Created by Katie, Soowan, Viktoriya, and Lucy</div>
-    </footer>
-
+  <footer id="chatRoomFooter">
+    <div id="postFooter">
+      <a id="postTitle">Post</a>
+      <input type="text" id="enteredPost" name="text" placeholder="Enter your own post...">
+      <button onclick="post()">Send Post</button>
+      <span><button class='material-icons' id='commentMicButton' onclick="uploadRecording()">mic</button></span>
+      <span><button class='material-icons' id='commentPicButton' onclick="uploadPic()">insert_photo</button></span>
+      <span><button class='material-icons' id='commentLinkButton' onclick="uploadLink()">insert_link</button></span>
+    </div>
+    <div class="forumTopicsList">
+      <div id="forumTopicsListTitle">Forums:</div>
+      <a id="forumTopic" href="#friends">Friends</a>
+      <a id="forumTopic" href="#family">Family</a>
+      <a id="forumTopic" href="#relationships">Relationships</a>
+      <a id="forumTopic" href="#misc">Miscellaneous</a>
+      <a id="forumTopic" href="https://docs.google.com/forms/d/e/1FAIpQLSetuyt_grz53fNgZhr5Bq1KWreBKpjCT5vSx2xK2xH9D2fP1g/viewform">SUGGESTIONS
+      </a>
+    </div>
+    <!-- <div class="search-container">
+          <form action="/action_page.php">
+            <input type="text" placeholder="#hashtag" name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div> -->
+  </footer>
 </body>
 
 </html>
