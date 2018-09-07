@@ -43,7 +43,7 @@ body {
   clear: both;
 }
 
-h2 {
+.names {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
@@ -67,7 +67,7 @@ h2 {
   font-size: 40px;
 }
 
-h2:hover {
+.names:hover {
   color: rgba(169, 214, 169, 1);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 1), 0 2px 0 rgba(255, 255, 255, 1),
     0 3px 0 rgba(255, 255, 255, 1), 0 4px 0 rgba(255, 255, 255, 1),
