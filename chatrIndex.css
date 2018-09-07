@@ -97,19 +97,20 @@ body {
 .numbertext {
   color: black;
   background-color: azure;
+  font-family: "Kalam";
   font-size: 16px;
   padding: 8px 12px;
   position: absolute;
   top: 0;
 }
 
-/* The dots/bullets/indicators */
+/* The dots indicating position in the slideshow*/
 .dot {
   cursor: pointer;
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  background-color: #bbb;
+  background-color: rgb(124, 124, 124);
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;
@@ -117,7 +118,7 @@ body {
 
 .active,
 .dot:hover {
-  background-color: #717171;
+  background-color: #4d4c4c;
 }
 
 /* Fading animation */
