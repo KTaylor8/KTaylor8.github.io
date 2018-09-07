@@ -57,3 +57,10 @@ function thumbsDown(postNum) {
   document.getElementById("like"+postNum).style.display = "none";
   document.getElementById("dislike"+postNum).style.display = "block";
 }
+
+//it seems like the forums might each need to be separate pages with mostly duplicated code
+//and clicking a topic would send user to that page
+function forumTopicClicked(topic) {
+  var message = "Sorry, but there is no "+topic+" Forum yet, only the General Forum.";
+  alert(message);
+}
