@@ -64,3 +64,8 @@ function forumTopicClicked(topic) {
   var message = "Sorry, but there is no "+topic+" Forum yet, only the General Forum.";
   alert(message);
 }
+
+function brokenPostButtonClicked(button) {
+  var message = "Sorry, but there is not yet the ability to post "+button+", only plain text.";
+  alert(message);
+}
