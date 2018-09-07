@@ -19,8 +19,8 @@ function signInCheck() {
   for (i in usersArr) {
     if (username_entered == usersArr[i].username && password_entered == usersArr[i].password) {
       signedIn = true;
-      alert("You are 'logged in' on this prototype; however, there is currently not a database of saved users.");
-      window.location.assign("index.html");
+      alert("You are 'logged in' to this prototype; however, there is currently not a database of saved users.");
+      window.location.assign("chatrIndex.html");
       break
     }
   }

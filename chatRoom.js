@@ -1,5 +1,5 @@
 //window.onload makes it so the initial things happen only after the page is actually loaded
-var postsAvailable = 1;
+var postsAvailable = 3;
 var post1Filled = false;
 window.onload = function () {
   for (var postNum = 0; postNum < postsAvailable; postNum++) {
@@ -38,23 +38,22 @@ function post() {
     // //  }
 }
 
-/*not sure how to make this for the general case since different posts will need
-*different counts and idk how to detect if a veriable already exists or not*/
-var count0 = 0;
-function sendComments0() {
-    var p = document.createElement("p");
-    p.className = 'chatMessage';
-    p.innerHTML = count0 + ". " + document.getElementById("commentBox0").value;
-    document.getElementById("commentList0").appendChild(p);
-    count0 = count0 + 1; // count++; or ++count; or count += 1;
+function sendComments(postNum) {
+    // create a new div element, gives it a class name, make it contents the comment, then adds this as a child under the commentList element
+    var oneComment = document.createElement("div");
+    oneComment.className = 'commentMessage';
+    oneComment.innerHTML = document.getElementById("commentBox" + postNum).value;
+    document.getElementById("commentList" + postNum).appendChild(oneComment);
 }
 
 function thumbsUp(postNum) {
+  // shows thumbs up & hides thumbs down
   document.getElementById("like"+postNum).style.display = "block";
   document.getElementById("dislike"+postNum).style.display = "none";
 }
 
 function thumbsDown(postNum) {
+  // shows thumbs down & hides thumbs up
   document.getElementById("like"+postNum).style.display = "none";
   document.getElementById("dislike"+postNum).style.display = "block";
 }

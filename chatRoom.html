@@ -43,42 +43,100 @@
       <div class="forumHeader">
         <div class="forumHeaderText">
           <p id="forumTitle">General Forum</p>
-          <p id="noPosts">There are no posts yet. Add one via the box at the bottom.</p>
+          <p id="noPosts">There are no posts yet. Add one via the box in the bottom left corner of the screen.</p>
         </div>
       </div>
 
-      <!--first post. perfect this one before copying/pasting it and changing the numbers to make more-->
+<!--To make more posts: copy/paste a postBox, change all identifying #s mentioned in post's HTML, then set postsAvailable in JS to the number of posts-->
+      <!--Post 0-->
       <div id="postBox0" class="postBoxes">
         <div id="user">
-          <img class="userimage" src="images/minion2.jpg">
-          <div class="usernames">User_1</div>
+          <img class="userImage" src="images/userPlaceholder.png">
+          <div class="usernames">  User_1</div>
         </div>
         <div class="postAndComments">
           <div class="post">
-            <a id="textSpace0"></a>
+            <a id="textSpace0" class="textSpaces"></a>
             <span class='material-icons  thumbsUpButton' id='like0'>thumb_up</span>
             <span class='material-icons  thumbsDownButton' id='dislike0'>thumb_down</span>
           </div>
           <p></p>
           <!--comments box-->
-          <div id="commentList0" class="commentListBox">
-            <div class="comments">Comment on this post</div>
-            <input class="commentBox" type="text" id="commentBox0" placeholder="Type a comment...">
-            <button class="sendButton" onclick="sendComments0(0)">Send Comment</button>
+          <div id="commentList0" class="commentListBoxes">
+            <div class="commentHeading">Comment below on this post</div>
+            <div id="commentInputRow">
+            <input type="text" id="commentBox0" placeholder="Type a comment...">
+            <button class="sendButton" onclick="sendComments(0)">Send Comment</button>
+            <!-- you give something multiple classes by adding a space, not another "class=''" -->
             <span><button class='material-icons  thumbsUpButton' onclick="thumbsUp(0)">thumb_up</button></span>
             <span><button class='material-icons  thumbsDownButton' onclick="thumbsDown(0)">thumb_down</button></span>
+            </div>
             <p></p>
           </div>
-          <!-- close postAndComments div -->
+          <!-- close postAndComments div 0 -->
         </div>
-        <!-- close div housing first post -->
+        <!-- close div housing post 0-->
       </div>
 
-      <!--2nd post-->
-      
+      <!--Post 1-->
+      <div id="postBox1" class="postBoxes">
+          <div id="user">
+            <img class="userImage" src="images/userPlaceholder.png">
+            <div class="usernames">  User_1</div>
+          </div>
+          <div class="postAndComments">
+            <div class="post">
+              <a id="textSpace1" class="textSpaces"></a>
+              <span class='material-icons  thumbsUpButton' id='like1'>thumb_up</span>
+              <span class='material-icons  thumbsDownButton' id='dislike1'>thumb_down</span>
+            </div>
+            <p></p>
+            <!--comments box-->
+            <div id="commentList1" class="commentListBoxes">
+              <div class="commentHeading">Comment below on this post</div>
+              <div id="commentInputRow">
+              <input type="text" id="commentBox1" placeholder="Type a comment...">
+              <button class="sendButton" onclick="sendComments(1)">Send Comment</button>
+              <!-- you give something multiple classes by adding a space, not another "class=''" -->
+              <span><button class='material-icons  thumbsUpButton' onclick="thumbsUp(1)">thumb_up</button></span>
+              <span><button class='material-icons  thumbsDownButton' onclick="thumbsDown(1)">thumb_down</button></span>
+              </div>
+              <p></p>
+            </div>
+            <!-- close postAndComments div 1 -->
+          </div>
+          <!-- close div housing post 1-->
+        </div>
 
-
-
+<!--Post 2-->
+<div id="postBox2" class="postBoxes">
+    <div id="user">
+      <img class="userImage" src="images/userPlaceholder.png">
+      <div class="usernames">  User_1</div>
+    </div>
+    <div class="postAndComments">
+      <div class="post">
+        <a id="textSpace2" class="textSpaces"></a>
+        <span class='material-icons  thumbsUpButton' id='like2'>thumb_up</span>
+        <span class='material-icons  thumbsDownButton' id='dislike2'>thumb_down</span>
+      </div>
+      <p></p>
+      <!--comments box-->
+      <div id="commentList2" class="commentListBoxes">
+        <div class="commentHeading">Comment below on this post</div>
+        <div id="commentInputRow">
+        <input type="text" id="commentBox2" placeholder="Type a comment...">
+        <button class="sendButton" onclick="sendComments(2)">Send Comment</button>
+        <!-- you give something multiple classes by adding a space, not another "class=''" -->
+        <span><button class='material-icons  thumbsUpButton' onclick="thumbsUp(2)">thumb_up</button></span>
+        <span><button class='material-icons  thumbsDownButton' onclick="thumbsDown(2)">thumb_down</button></span>
+        </div>
+        <p></p>
+      </div>
+      <!-- close postAndComments div 2-->
+    </div>
+    <!-- close div housing post 2-->
+  </div>
 
       <!--closes the div that separates the forums from the header-->
     </div>
@@ -93,7 +151,7 @@
     <div id="postFooter">
       <a id="postTitle">Post</a>
       <input type="text" id="enteredPost" name="text" placeholder="Enter your own post...">
-      <button onclick="post()">Send Post</button>
+      <button class='sendButton' onclick="post()">Send Post</button>
       <span><button class='material-icons' id='postMicButton' onclick="uploadRecording()">mic</button></span>
       <span><button class='material-icons' id='postPicButton' onclick="uploadPic()">insert_photo</button></span>
       <span><button class='material-icons' id='postLinkButton' onclick="uploadLink()">insert_link</button></span>

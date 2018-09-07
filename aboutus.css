@@ -16,7 +16,7 @@ body {
   flex-direction: column;
 }
 
-.row > p, #backgroundCredit, #KatieCredit {
+.column > p, #backgroundCredit, #KatieCredit {
   text-align: center;
   font-family: "Sansita";
   

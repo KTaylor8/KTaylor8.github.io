@@ -17,9 +17,9 @@ function createAccount(event) {
   userObj.password = document.getElementById('newPwdBox').value;
   userObj.emailAddress = document.getElementById('newEmailBox').value;
   usersArr.push(userObj);
-  var message = "We are still working setting up the user database and are currently unable to create your profile. Here is your info: username: " + userObj.username + ", password: " + userObj.password + " & email: " + userObj.emailAddress;
+  var message = "There is not a user database configured yet; thus, your profile cannot be created. Here is your information in the meantime: username: " + userObj.username + ", password: " + userObj.password + " & email: " + userObj.emailAddress;
   alert(message);
-  window.location.assign("index.html");
+  window.location.assign("chatrIndex.html");
 }
   // //convert usersArr to newUsersArrObj
   // var newUsersArrObj = {};
