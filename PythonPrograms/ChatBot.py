@@ -1,5 +1,6 @@
 #imports the ability to get a random number (we will learn more about this later!)
 from random import *
+#imports stuff that lets you manipulate flow time of program
 import time
 #doAgain will be the variable for the while loop confirming you want to continue any of the chatbot functions
 #for some reason its not working as a global variable, so I'm also declaring it locally
@@ -12,7 +13,7 @@ yesList = ['yes','yeah','sure','okay','ok','why not','yeet','yep','yup','si','af
 noList = ['no','nope','not at all','absolutely not',"yesn't","yesnt",'negative','never','of course not']
 
 def intro():
-    answer = input("I'm your personal chatbot, Billy Bob Joe Bob Joe the 17th and a half.\nWhat's your name?\n")
+    answer = input("Welcome to Katie's random collection of prorgams!\nWhat's your name?\n")
     print("\nHi, " + answer +'!')
 
 def process_input(prompt):
@@ -22,7 +23,7 @@ def process_input(prompt):
     elif prompt == "math":
         calc()
     elif prompt == "kpop":
-        kpopNameGenerator()
+        kpopBandNameGenerator()
     elif prompt == "rps" or prompt == "rock paper scissors":
         rps()
     elif prompt == "guesstheword":
@@ -69,81 +70,75 @@ def doAgainErrorCheck(doAgainQuestion):
             print("Error! Try again.")
 
 def calc():
-    print("""
-Would you like to do summation (+), subtraction (-), multiplication (*), division (/), averaging (avg), or an even or odd check (evenOrOdd)?
-(This calculator will only take single numbers, not expressions, when 'a number' is requested.)""")
-    answer = input().lower()
     doAgain = 'yes'
+    while doAgain in yesList:
+        answer = input("""
+Would you like to do summation (+), subtraction (-), multiplication (*), division (/), averaging (avg), or an even or odd check (evenOrOdd)?
+(This calculator will only take single numbers, not expressions, when 'a number' is requested.)
+""").lower()
     
-    if answer == '+' or answer == 'summation':
-        while doAgain in yesList:
+        if answer == '+' or answer == 'summation':
+            while doAgain in yesList:
+                numList = []
+                numList.append(numCheck(input('\nType in the first number of the summation.\n')))
+                moreNumsCheck("to add", numList)
+                print("Here's your sum:", summation(numList))
+                doAgain = doAgainErrorCheck("\nDo you want to calculate another sum?\n")
+            doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
+
+        elif answer == '-' or answer == 'subtraction':
+            while doAgain in yesList:
+                numList = []
+                startingNum = numCheck(input('\nType in the starting number.\n'))
+                moreNumsCheck("to subtract", numList)
+                print("Here's your difference:", subtraction(startingNum, numList))
+                doAgain = doAgainErrorCheck("\nDo you want to calculate another difference?\n")
+            doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
+
+        #see above summation section for what needs to be updated below
+        elif answer == '*' or answer == 'multiplication':
+            while doAgain in yesList:
+                numList = []
+                startingNum = numCheck(input('\nType in the starting number.\n'))
+                moreNumsCheck("to multiply", numList)
+                print("Here's your product:", multiply(startingNum, numList))
+                doAgain = doAgainErrorCheck("\nDo you want to calculate another product?\n")
+            doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
+
+        elif answer == '/' or answer == 'division':
+            while doAgain in yesList:
+                numList = []
+                startingNum = numCheck(input('\nType in the starting number.\n'))
+                moreNumsCheck("to divide", numList)
+                print("Here's your quotient:", divide(startingNum, numList))
+                doAgain = doAgainErrorCheck("\nDo you want to calculate another quotient?\n")
+            doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
+
+        #the fill in the blank wording that works for the functions in the other calculations don't work as well here but oh well
+        elif answer == 'averaging' or answer == 'avg':
             numList = []
-            numList.append(numCheck(input('Type in the first number of the summation.\n')))
-            moreNumsCheck("to add", numList)
-            print("Here's your sum:", summation(numList))
-            doAgain = doAgainErrorCheck("\nDo you want to calculate another sum?\n")
+            while doAgain in yesList:
+                startingNum = numCheck(input('\nType in the starting number.\n'))
+                moreNumsCheck("to include", numList)
+                avg = summation(numList)/len(numList)
+                print("\nHere's your average:", avg)
+                doAgain = input("\nDo you want to calculate another average?\n").lower()
+            doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")                
 
-    elif answer == '-' or answer == 'subtraction':
-        while doAgain in yesList:
-            numList = []
-            startingNum = numCheck(input('Type in the starting number.\n'))
-            moreNumsCheck("to subtract", numList)
-            print("Here's your difference:", subtraction(startingNum, numList))
-            doAgain = doAgainErrorCheck("\nDo you want to calculate another difference?\n")
+        elif answer == 'evenorodd':
+            while doAgain in yesList:
+                #round() rounds to nearest integer (or n digits if parameter n given) based on the number input and checked
+                roundedNum = round(numCheck(input("\nGive me a number to deem even or odd. (This function will round if given a decimal number.)\n")))
+                if roundedNum % 2 == 0:
+                    print(roundedNum, "is an even number.")
+                elif roundedNum % 2 == 1:
+                    print(roundedNum, 'is an odd number.')
+                doAgain = doAgainErrorCheck("\nDo you want to check another number?\n")
+            doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
+                
+        else:
+            print("Error. Try again.")
 
-    #see above summation section for what needs to be updated below
-    elif answer == '*' or answer == 'multiplication':
-        while doAgain in yesList:
-            numList = []
-            startingNum = numCheck(input('Type in the starting number.\n'))
-            moreNumsCheck("to multiply", numList)
-            print("Here's your product:", multiply(startingNum, numList))
-            doAgain = doAgainErrorCheck("\nDo you want to calculate another product?\n")
-
-    elif answer == '/' or answer == 'division':
-        while doAgain in yesList:
-            numList = []
-            startingNum = numCheck(input('Type in the starting number.\n'))
-            moreNumsCheck("to divide", numList)
-            print("Here's your quotient:", divide(startingNum, numList))
-            doAgain = doAgainErrorCheck("\nDo you want to calculate another quotient?\n")
-
-    elif answer == 'averaging' or answer == 'avg':
-        numList = []
-        moreNums = 'yes'
-        while doAgain in yesList:
-            while True:
-                num = input("Type the first number in the group to average.\n")
-                if num.isdigit() == True:
-                    break
-                else:
-                    print("That's not a number. Try again.")
-            numList.append(float(num))
-            while moreNums in yesList:
-                while True:
-                    num = input("\nType in the next number.\n")
-                if (num.isdigit() == True):
-                    break
-                else:
-                    print("That's not a number. Try again.")
-                numList.append(float(num))
-                moreNums = input("\nAre there more numbers in your group to average?\n").lower()
-            avg = summation(numList)/len(numList)
-            print("\nHere's your average:", avg)
-            doAgain = input("\nDo you want to calculate another average?\n").lower()
-
-    elif answer == 'evenorodd':
-        while (doAgain in yesList):
-            #round() rounds to nearest integer (or n digits if parameter n given) based on the number input and checked
-            roundedNum = round(numCheck(input("Give me a number to deem even or odd. (This function will round if given a decimal number.)\n")))
-            if roundedNum % 2 == 0:
-                print(roundedNum, "is an even number.")
-            elif roundedNum % 2 == 1:
-                print(roundedNum, 'is an odd number.')
-            doAgain = doAgainErrorCheck("\nDo you want to check another number?\n")
-
-    else:
-        print("Error. Try again.")
 
 def summation(numList):
     sum = 0
@@ -169,11 +164,11 @@ def divide(startingNum, numList):
         quotient /= numList[i]
     return quotient
 
-def kpopNameGenerator():
+def kpopBandNameGenerator():
+    doAgain = 'yes'
     #list of words that can go into the band names
     wordList = ["Best", "Idol", "Perfect", "Ubiquitous", "Majestic", "Mystical", "Awesome", "Super"]
     print("\nWelcome to the Kpop Band Name Generator!")
-    #doAgain = 'yes'
     while doAgain in yesList:
         #creates empty list for name
         name = []
@@ -188,8 +183,8 @@ def kpopNameGenerator():
         #turns list strings into one string; map({function},{sequence to apply function to})
         name_str = ' '.join(map(str, name))
         #Turns one string into acronym & prints (I don't 100% understand how it works)
-        print(''.join(i[0] for i in name_str.split() if i[0].isupper()))
-        #apparently this also works but idk why: print(''.join(x[0] for x in name_str.split()))
+        print(''.join(x[0] for x in name_str.split()))
+        #apparently this also works but idk why: print(''.join(i[0] for i in name_str.split() if i[0].isupper()))
         print("""\nThis stands for...""")
         #prints full form of acronym
         print(name_str)
@@ -224,43 +219,49 @@ def rps():
         elif user == "scissors":
             user_num = 3
 
-#RPS GAME UNFINISHED
-        #computer chooses
+        #computer chooses; 2 == scissors, 3 == paper, 4 == rock 
         computer = randint(2,4)
-        
-        print("Rock")
-        time.speed(1)
+
+        #time.sleep(sec) pauses program for that number of seconds
+        print("\nRock")
+        time.sleep(1)
         print("Paper")
-        time.speed(1)
+        time.sleep(1)
         print("Scissors")
-        time.speed(1)
+        time.sleep(1)
         print("Shoot!\n")
-        time.speed(0.2)
+        time.sleep(0.3)
 
 #you lose
-        if computer - 1 == user_num:
+        if user_num + 1 == computer:
+            #user == 'rock'
             if user_num == 1:
                 print("Computer: paper")
+            #user == 'paper'
             elif user_num == 2:
                 print("Computer: scissors")
+            #user == 'scissors'
             elif user_num == 3:
                 print("Computer: rock")
 
-            print ("You lost!")
+            print ("\nYou lost!")
 #tie
         elif computer == user_num:
-            print("You tied!")
+            print("Computer:", user,"\nYou tied.")
 
 #you win
         else:
+            #user == 'rock'
             if user_num == 1:
-                print("Computer: paper")
-            elif user_num == 2:
                 print("Computer: scissors")
-            elif user_num == 3:
+            #user == 'paper'
+            elif user_num == 2:
                 print("Computer: rock")
+            #user == 'scissors'
+            elif user_num == 3:
+                print("Computer: paper")
 
-            print ("You won!")
+            print ("\nYou won!")
         doAgain = doAgainErrorCheck("\nDo you want to play again?\n")
 
 
