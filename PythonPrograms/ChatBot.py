@@ -1,7 +1,8 @@
-##imports the ability to get a random number (we will learn more about this later!)
+#imports the ability to get a random number (we will learn more about this later!)
 from random import *
 import time
 #doAgain will be the variable for the while loop confirming you want to continue any of the chatbot functions
+#for some reason its not working as a global variable, so I'm also declaring it locally
 doAgain = 'yes'
 #variable for loop asking for more numbers
 moreNums = 'yes'
@@ -9,7 +10,6 @@ moreNums = 'yes'
 greetingList = ["hi","hello","sup","hey","greetings",'yo','hola']
 yesList = ['yes','yeah','sure','okay','ok','why not','yeet','yep','yup','si','affirmative','of course','always']
 noList = ['no','nope','not at all','absolutely not',"yesn't","yesnt",'negative','never','of course not']
-#doAgain (no its companion checker for noList vs error) and lists are not yet integrated into all functions
 
 def intro():
     answer = input("I'm your personal chatbot, Billy Bob Joe Bob Joe the 17th and a half.\nWhat's your name?\n")
@@ -19,15 +19,13 @@ def process_input(prompt):
     prompt = prompt.lower()
     if greet(prompt, greetingList) == True:
         print(prompt, ' back!')
-    elif prompt == "calculator":
+    elif prompt == "math":
         calc()
     elif prompt == "kpop":
         kpopNameGenerator()
     elif prompt == "rps" or prompt == "rock paper scissors":
         rps()
-    elif prompt == "evenorodd":
-        evenOrOdd()
-    elif prompt == "guessTheWord":
+    elif prompt == "guesstheword":
         guessTheWord()
     else:
         default()
@@ -73,11 +71,10 @@ def doAgainErrorCheck(doAgainQuestion):
 def calc():
     print("""
 Would you like to do summation (+), subtraction (-), multiplication (*), division (/), averaging (avg), or an even or odd check (evenOrOdd)?
-(Please note that this calculator will only take single numbers, not expressions, when 'a number' is requested.)""")
+(This calculator will only take single numbers, not expressions, when 'a number' is requested.)""")
     answer = input().lower()
     doAgain = 'yes'
     
-    #NEED TO ADD DOAGAIN loops and error checks TO REST OF FUNCTIONS AND numchecks AND MORENUMSCHECKS TO REST OF NUMBER FUNCTIONS
     if answer == '+' or answer == 'summation':
         while doAgain in yesList:
             numList = []
@@ -96,38 +93,20 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
 
     #see above summation section for what needs to be updated below
     elif answer == '*' or answer == 'multiplication':
-        #error check for non-numbers
-        while True:
-            num1 = input("1st number: ")
-            if (num.isdigit() == True):    
-                break
-            else:
-                print("That's not a number. Try again.")
-        #error check for non-numbers
-        while True:
-            num2 = input ('2nd number: ')
-            if (num.isdigit() == True):
-                break
-            else:
-                print("That's not a number. Try again.")
-        print(float(num1) * float(num2))
+        while doAgain in yesList:
+            numList = []
+            startingNum = numCheck(input('Type in the starting number.\n'))
+            moreNumsCheck("to multiply", numList)
+            print("Here's your product:", multiply(startingNum, numList))
+            doAgain = doAgainErrorCheck("\nDo you want to calculate another product?\n")
 
     elif answer == '/' or answer == 'division':
-        #error check for non-numbers
-        while True:
-            num1 = input("Dividend: ")
-            if (num1.isdigit() == True):
-                break
-            else:
-                print("That's not a number. Try again.")
-        #error check for non-numbers
-        while True:
-            num2 = input ('Divisor: ')
-            if (num2.isdigit() == True):
-                break
-            else:
-                print("That's not a number. Try again.")
-        print(float(num1) / float(num2))
+        while doAgain in yesList:
+            numList = []
+            startingNum = numCheck(input('Type in the starting number.\n'))
+            moreNumsCheck("to divide", numList)
+            print("Here's your quotient:", divide(startingNum, numList))
+            doAgain = doAgainErrorCheck("\nDo you want to calculate another quotient?\n")
 
     elif answer == 'averaging' or answer == 'avg':
         numList = []
@@ -178,6 +157,18 @@ def subtraction(startingNum, numList):
         diff -= numList[i]
     return diff
 
+def multiply(startingNum, numList):
+    product = startingNum
+    for i in range(len(numList)):
+        product *= numList[i]
+    return product
+
+def divide(startingNum, numList):
+    quotient = startingNum
+    for i in range(len(numList)):
+        quotient /= numList[i]
+    return quotient
+
 def kpopNameGenerator():
     #list of words that can go into the band names
     wordList = ["Best", "Idol", "Perfect", "Ubiquitous", "Majestic", "Mystical", "Awesome", "Super"]
@@ -203,7 +194,7 @@ def kpopNameGenerator():
         #prints full form of acronym
         print(name_str)
 
-        #keeps asking until receives response in noList
+        #keeps asking until receives response in noList, but with special error responses
         while True:
             doAgain = input("\nDo you want to generate another band name?\n").lower()
             if doAgain in yesList:
@@ -216,12 +207,12 @@ def kpopNameGenerator():
                 print("Error! You got no jams.")
 
 def rps():
-    answer = ("\nDo you want to play Rock Paper Scissors? ('yes' or 'no')")
-    answer = answer.lower()
-    if answer == "yes":
-        user = input("Choose 'rock', 'paper', or 'scissors'.")
+    doAgain = 'yes'
+    while doAgain in yesList:
+        user = input("\nChoose 'rock', 'paper', or 'scissors'.\n")
         user = user.lower()
 
+        #error check for responses other than rock, paper, or scissors
         while user != 'rock' and user != 'paper' and user != 'scissors':
             user = input ("Error! Type your choice again: ")
             user = user.lower()
@@ -234,18 +225,20 @@ def rps():
             user_num = 3
 
 #RPS GAME UNFINISHED
+        #computer chooses
         computer = randint(2,4)
+        
         print("Rock")
         time.speed(1)
         print("Paper")
         time.speed(1)
         print("Scissors")
         time.speed(1)
-        print("Shoot! \n")
+        print("Shoot!\n")
         time.speed(0.2)
 
 #you lose
-        if computer - 1 == user:
+        if computer - 1 == user_num:
             if user_num == 1:
                 print("Computer: paper")
             elif user_num == 2:
@@ -260,88 +253,93 @@ def rps():
 
 #you win
         else:
-            if user == 1:
+            if user_num == 1:
                 print("Computer: paper")
-            elif user == 2:
+            elif user_num == 2:
                 print("Computer: scissors")
-            elif user == 3:
+            elif user_num == 3:
                 print("Computer: rock")
 
             print ("You won!")
+        doAgain = doAgainErrorCheck("\nDo you want to play again?\n")
 
 
 def guessTheWord():
+    doAgain = 'yes'
     #Create the list of words you want to choose from.
     wordList = ("thaumaturgy", "serenditipity", "prestidigitation", "thorough", "rhythm", "squirrel")
-    ##Generates random index location
-    randomIndex = randint(0, len(wordList)-1)
-    #select mystery word
-    mysteryWord = wordList[randomIndex]
 
-    #make blanks in a way that matches formatting w/ mysteryWord
-    displayedLetters = []
-    for i in range(len(mysteryWord)):
-        displayedLetters += '_'
+    while doAgain in yesList:
+        #Generates random index location to select the mystery word
+        randomIndex = randint(0, len(wordList)-1)
+        #select mystery word
+        mysteryWord = wordList[randomIndex]
 
-    lives = 7
-    guessed = []
-    print("Welcome to Guess the Word!")
+        #make blanks in a way that matches formatting w/ mysteryWord
+        displayedLetters = []
+        for i in range(len(mysteryWord)):
+            displayedLetters += '_'
 
-    while lives > 0:
-        #asks user to guess
-        if lives == 1:
-            print("""This is your last life.
+        lives = 7
+        guessed = []
+        print("\nWelcome to Guess the Word!")
+
+        while lives > 0:
+            #asks user to guess
+            if lives == 1:
+                print("""This is your last life.
 Here are the letters you have guessed:""", guessed, """
 Guess another letter. Please only guess lowercase letters.""")
 
-        else:
-            print("""
+            else:
+                print("""
 You have""", lives, """lives to guess the word.
 Here are the letters you have guessed:""", guessed, """
 Guess another letter. Please only guess lowercase letters.""")
 
-        print(displayedLetters)
+            print(displayedLetters)
 
-        #take user input
-        guess = input()
+            #take user input
+            guess = input()
 
-        if guess in mysteryWord:
-            #detect correct letter's place
-            for i in range(len(mysteryWord)):
-                #detect if correct guessed letter is in this item in the list
-                if guess == mysteryWord[i]:
-                    #replace letter: {listName.insert(index,item)}
-                    del displayedLetters[i]
-                    displayedLetters.insert(i,guess)
+            if guess in mysteryWord:
+                #detect correct letter's place
+                for i in range(len(mysteryWord)):
+                    #detect if correct guessed letter is in this item in the list
+                    if guess == mysteryWord[i]:
+                        #replace letter: {listName.insert(index,item)}
+                        del displayedLetters[i]
+                        displayedLetters.insert(i,guess)
 
-    #if win, break out of loop and program will end.
-            if "_" not in displayedLetters:
-                print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~")
-                print(mysteryWord,"""
-                Congratulations! You won!""")
-                break
+                #if win, break out of loop and program will end.
+                if "_" not in displayedLetters:
+                    print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~")
+                    print(mysteryWord,"""
+                    Congratulations! You won!""")
+                    break
 
-        #if guess not in mysteryWord
-        else:
-            print("Nope!")
-            #check if the user inputted more than one letter (no penalty)
-            if len(guess) > 1:
-                print("That was more than one letter, silly. I won't penalize you. Try again.")
+            #if guess not in mysteryWord
             else:
-                lives -= 1
-                #check if letter was previously guessed
-                if guess in guessed:
-                    print("You already guessed that letter, silly.")
-
+                print("Nope!")
+                #check if the user inputted more than one letter (no penalty)
+                if len(guess) > 1:
+                    print("That was more than one letter, silly. I won't penalize you. Try again.")
                 else:
-                    print(guess,"is not in the mystery word.")
-                    guessed.append(guess)
+                    lives -= 1
+                    #check if letter was previously guessed
+                    if guess in guessed:
+                        print("You already guessed that letter, silly.")
 
-                #lost game; the while loop will end and the program will end
-                if lives == 0:
-                    print("""~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-                        Game over! You lost.
-                        The word was""", mysteryWord)
+                    else:
+                        print(guess,"is not in the mystery word.")
+                        guessed.append(guess)
+
+                    #lost game; the while loop will end and the program will end
+                    if lives == 0:
+                        print("""~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+                            Game over! You lost.
+                            The word was""", mysteryWord)
+            doAgain = doAgainErrorCheck("\nDo you want to guess a new mystery word?\n")
 
 
 def default():
@@ -353,10 +351,9 @@ def main():
     intro()
     while True:
         answer = input("""
-Type 'calculator' to do some basic math calculations,
+Type 'math' to do some basic math calculations/checks,
 type 'kpop' to go to the Kpop Band Name Generator,
 type 'rps' to play Rock, Paper, Scissors (unfinished),
-type 'evenOrOdd' to check if a number is even or odd,
 or type 'guessTheWord' to play a word-guessing game.
 """)
         process_input(answer)
