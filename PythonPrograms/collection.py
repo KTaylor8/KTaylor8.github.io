@@ -17,7 +17,7 @@ def intro():
     print("\nHi, " + answer +'!')
 
 def process_input(prompt):
-    prompt = prompt.lower()
+    prompt = prompt.strip().lower()
     if greet(prompt, greetingList) == True:
         print(prompt, ' back!')
     elif prompt == "math":
@@ -28,6 +28,8 @@ def process_input(prompt):
         rps()
     elif prompt == "guesstheword":
         guessTheWord()
+    elif prompt == "password":
+        testPassword()
     else:
         default()
 
@@ -62,7 +64,7 @@ def moreNumsCheck(instruction, numList):
 def doAgainErrorCheck(doAgainQuestion):
     doAgain = 'yes'
     while True:
-        doAgain = input(doAgainQuestion).lower()
+        doAgain = input(doAgainQuestion).strip().lower()
         if doAgain in yesList or doAgain in noList:
             #If in yesList, function will loop again, and if in noList it will not loop
             return(doAgain)
@@ -75,7 +77,7 @@ def calc():
         answer = input("""
 Would you like to do summation (+), subtraction (-), multiplication (*), division (/), averaging (avg), or an even or odd check (evenOrOdd)?
 (This calculator will only take single numbers, not expressions, when 'a number' is requested.)
-""").lower()
+""").strip().lower()
     
         if answer == '+' or answer == 'summation':
             while doAgain in yesList:
@@ -122,7 +124,7 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
                 moreNumsCheck("to include", numList)
                 avg = summation(numList)/len(numList)
                 print("\nHere's your average:", avg)
-                doAgain = input("\nDo you want to calculate another average?\n").lower()
+                doAgain = input("\nDo you want to calculate another average?\n").strip().lower()
             doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")                
 
         elif answer == 'evenorodd':
@@ -191,7 +193,7 @@ def kpopBandNameGenerator():
 
         #keeps asking until receives response in noList, but with special error responses
         while True:
-            doAgain = input("\nDo you want to generate another band name?\n").lower()
+            doAgain = input("\nDo you want to generate another band name?\n").strip().lower()
             if doAgain in yesList:
                 break
             elif doAgain in noList:
@@ -205,12 +207,12 @@ def rps():
     doAgain = 'yes'
     while doAgain in yesList:
         user = input("\nChoose 'rock', 'paper', or 'scissors'.\n")
-        user = user.lower()
+        user = user.strip().lower()
 
         #error check for responses other than rock, paper, or scissors
         while user != 'rock' and user != 'paper' and user != 'scissors':
             user = input ("Error! Type your choice again: ")
-            user = user.lower()
+            user = user.strip().lower()
 
         if user == "rock":
             user_num = 1
@@ -342,6 +344,45 @@ Guess another letter. Please only guess lowercase letters.""")
                             The word was""", mysteryWord)
             doAgain = doAgainErrorCheck("\nDo you want to guess a new mystery word?\n")
 
+def testPassword():
+    doAgain = 'yes'
+    while doAgain in yesList:
+        #Take input from the keyboard, storing in the variable test_password
+        #Note - You will have to use .strip() to strip whitespace and newlines from the file and passwords
+        test_password = input("\nType a trial password that starts with a letter\n").strip().lower()
+        passwordUnknown = True
+        #When the "with" statement finishes, the text file closes and so you can start on the first line on the next iteration
+        with open("mostCommonPasswords.txt","r") as f:
+            for line in f:
+                line1 = line.strip()
+                if line1 == test_password:
+                    print("\nYour password (",test_password,") is weak; it's too common.")
+                    passwordUnknown = False
+                    break #breaks out of nearest loop
+                #checks if password entered is line in text file + # up to current year (range needs to be 1 more than year)
+                if line1 in test_password:
+                    for i in range(2019):
+                        lineNum = line1 + str(i)
+                        if lineNum == test_password:
+                            print("\nYour password (",test_password,") is weak; putting a number after a common password is not strong.")
+                            passwordUnknown = False
+                            break #breaks out of nearest loop
+                #checks for a password that is two things in text file
+                if line1 in test_password:
+                    with open("mostCommonPasswords.txt","r") as f:
+                        for line in f:
+                            line2 = line.strip()
+                            line12 = line1 + line2
+                            if line12 == test_password:
+                                print("\nYour password (",test_password,") is weak; putting together only 2 common passwords is not that strong.")
+                                passwordUnknown = False
+                                break #breaks out of the nearest loop it's in
+
+            if passwordUnknown == True:
+                print("\nGood! Your password is strong.")
+
+        doAgain = doAgainErrorCheck("\nDo you want to test another password?\n")
+        
 
 def default():
     print("Error. I don't understand what you want. Try again.")
@@ -354,7 +395,8 @@ def main():
 Type 'math' to do some basic math calculations/checks,
 type 'kpop' to go to the Kpop Band Name Generator,
 type 'rps' to play Rock, Paper, Scissors (unfinished),
-or type 'guessTheWord' to play a word-guessing game.
+type 'guessTheWord' to play a word-guessing game,
+or type 'password' to test the strength of a password.
 """)
         process_input(answer)
 
