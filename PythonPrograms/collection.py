@@ -355,31 +355,38 @@ def testPassword():
         with open("mostCommonPasswords.txt","r") as f:
             for line in f:
                 line1 = line.strip()
-                if line1 == test_password:
-                    print("\nYour password (",test_password,") is weak; it's too common.")
-                    passwordUnknown = False
-                    break #breaks out of nearest loop
+                # The commented out code is unnecessary b/c " " is being counted as a line, so any password that's a single common word is being caught as a double: " " + [word] 
+                # if line1 == test_password:
+                #     print("\nYour password (",line1,") is weak; it's too common.")
+                #     passwordUnknown = False
+                #     break #breaks out of the first for loop going through the text file lines
+
                 #checks if password entered is line in text file + # up to current year (range needs to be 1 more than year)
                 if line1 in test_password:
+                    #checks for a password that 
                     for i in range(2019):
                         lineNum = line1 + str(i)
                         if lineNum == test_password:
-                            print("\nYour password (",test_password,") is weak; putting a number after a common password is not strong.")
+                            print("\nYour password (",lineNum,") is weak; putting a number after a common password is not strong.")
                             passwordUnknown = False
-                            break #breaks out of nearest loop
-                #checks for a password that is two things in text file
-                if line1 in test_password:
+                            break #breaks out of the second for loop going through the text file lines
+                    if passwordUnknown == False:
+                        break #breaks out of the first for loop going through the text file lines
+
+                    #checks for a password that is two words in text file, include " " + [word], which is actually faster than looking for the single word in the file b/c " " comes first 
                     with open("mostCommonPasswords.txt","r") as f:
                         for line in f:
                             line2 = line.strip()
                             line12 = line1 + line2
                             if line12 == test_password:
-                                print("\nYour password (",test_password,") is weak; putting together only 2 common passwords is not that strong.")
+                                print("\nYour password (",line12,") is weak; it's too simple for a program to crack.")
                                 passwordUnknown = False
-                                break #breaks out of the nearest loop it's in
+                                break #breaks out of the second for loop going through the text file lines
+                    if passwordUnknown == False:
+                        break #breaks out of the first for loop going through the text file lines
 
-            if passwordUnknown == True:
-                print("\nGood! Your password is strong.")
+        if passwordUnknown == True:
+            print("\nGood! Your password is strong.")
 
         doAgain = doAgainErrorCheck("\nDo you want to test another password?\n")
         
