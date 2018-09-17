@@ -2,36 +2,10 @@
 from random import *
 #imports stuff that lets you manipulate flow time of program
 import time
-#doAgain will be the variable for the while loop confirming you want to continue any of the chatbot functions
-#for some reason its not working as a global variable, so I'm also declaring it locally
-doAgain = 'yes'
-#variable for loop asking for more numbers
-moreNums = 'yes'
-#lists for checking many user responses that share a single intention:
+#lists for checking many user responses that share a single intent:
 greetingList = ["hi","hello","sup","hey","greetings",'yo','hola']
 yesList = ['yes','yeah','sure','okay','ok','why not','yeet','yep','yup','si','affirmative','of course','always']
 noList = ['no','nope','not at all','absolutely not',"yesn't","yesnt",'negative','never','of course not']
-
-def intro():
-    answer = input("Welcome to Katie's random collection of prorgams!\nWhat's your name?\n")
-    print("\nHi, " + answer +'!')
-
-def process_input(prompt):
-    prompt = prompt.strip().lower()
-    if greet(prompt, greetingList) == True:
-        print(prompt, ' back!')
-    elif prompt == "math":
-        calc()
-    elif prompt == "kpop":
-        kpopBandNameGenerator()
-    elif prompt == "rps" or prompt == "rock paper scissors":
-        rps()
-    elif prompt == "guesstheword":
-        guessTheWord()
-    elif prompt == "password":
-        testPassword()
-    else:
-        default()
 
 #return breaks out of function definition and returns thing in parentheses
 def greet(user_greeting, greetingList):
@@ -74,12 +48,12 @@ def doAgainErrorCheck(doAgainQuestion):
 def calc():
     doAgain = 'yes'
     while doAgain in yesList:
-        answer = input("""
+        userInput = input("""
 Would you like to do summation (+), subtraction (-), multiplication (*), division (/), averaging (avg), or an even or odd check (evenOrOdd)?
 (This calculator will only take single numbers, not expressions, when 'a number' is requested.)
 """).strip().lower()
     
-        if answer == '+' or answer == 'summation':
+        if userInput == '+' or userInput == 'summation':
             while doAgain in yesList:
                 numList = []
                 numList.append(numCheck(input('\nType in the first number of the summation.\n')))
@@ -88,7 +62,7 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
                 doAgain = doAgainErrorCheck("\nDo you want to calculate another sum?\n")
             doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
 
-        elif answer == '-' or answer == 'subtraction':
+        elif userInput == '-' or userInput == 'subtraction':
             while doAgain in yesList:
                 numList = []
                 startingNum = numCheck(input('\nType in the starting number.\n'))
@@ -98,7 +72,7 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
             doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
 
         #see above summation section for what needs to be updated below
-        elif answer == '*' or answer == 'multiplication':
+        elif userInput == '*' or userInput == 'multiplication':
             while doAgain in yesList:
                 numList = []
                 startingNum = numCheck(input('\nType in the starting number.\n'))
@@ -107,7 +81,7 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
                 doAgain = doAgainErrorCheck("\nDo you want to calculate another product?\n")
             doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
 
-        elif answer == '/' or answer == 'division':
+        elif userInput == '/' or userInput == 'division':
             while doAgain in yesList:
                 numList = []
                 startingNum = numCheck(input('\nType in the starting number.\n'))
@@ -117,7 +91,7 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
             doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")
 
         #the fill in the blank wording that works for the functions in the other calculations don't work as well here but oh well
-        elif answer == 'averaging' or answer == 'avg':
+        elif userInput == 'averaging' or userInput == 'avg':
             numList = []
             while doAgain in yesList:
                 startingNum = numCheck(input('\nType in the starting number.\n'))
@@ -127,7 +101,7 @@ Would you like to do summation (+), subtraction (-), multiplication (*), divisio
                 doAgain = input("\nDo you want to calculate another average?\n").strip().lower()
             doAgain = doAgainErrorCheck("\nDo you want to do another math calculation/check of any sort?\n")                
 
-        elif answer == 'evenorodd':
+        elif userInput == 'evenorodd':
             while doAgain in yesList:
                 #round() rounds to nearest integer (or n digits if parameter n given) based on the number input and checked
                 roundedNum = round(numCheck(input("\nGive me a number to deem even or odd. (This function will round if given a decimal number.)\n")))
@@ -181,15 +155,13 @@ def kpopBandNameGenerator():
             if wordList[randIndex] not in name:
                 name.append(wordList[randIndex])
         #prints name acronym (tuple?); I wanted it to be in the same line; it should work for any length name below the max
-        print("""\nYour band's name is ready!:""")
+        print("\nYour band name is ready!:")
         #turns list strings into one string; map({function},{sequence to apply function to})
         name_str = ' '.join(map(str, name))
         #Turns one string into acronym & prints (I don't 100% understand how it works)
         print(''.join(x[0] for x in name_str.split()))
         #apparently this also works but idk why: print(''.join(i[0] for i in name_str.split() if i[0].isupper()))
-        print("""\nThis stands for...""")
-        #prints full form of acronym
-        print(name_str)
+        print("\nThis stands for...\n", name_str)
 
         #keeps asking until receives response in noList, but with special error responses
         while True:
@@ -350,6 +322,10 @@ def testPassword():
         #Take input from the keyboard, storing in the variable test_password
         #Note - You will have to use .strip() to strip whitespace and newlines from the file and passwords
         test_password = input("\nType a trial password that starts with a letter\n").strip().lower()
+        #checks if password starts with letter
+        #strings are just lists of characters; .isalpha() checks if the characters in a string are all letters
+        while test_password[0].isalpha != True:
+            test_password = input("\nThat doesn't start with a letter. Try again.\n").strip().lower()
         passwordUnknown = True
         #When the "with" statement finishes, the text file closes and so you can start on the first line on the next iteration
         with open("mostCommonPasswords.txt","r") as f:
@@ -396,16 +372,32 @@ def default():
 
 # --- Put your main program below! ---
 def main():
-    intro()
+    userInput = input("Welcome to Katie's random collection of programs!\nWhat's your name?\n")
+    print("\nHi, " + userInput +'!')
     while True:
-        answer = input("""
+        userInput = input("""
 Type 'math' to do some basic math calculations/checks,
 type 'kpop' to go to the Kpop Band Name Generator,
-type 'rps' to play Rock, Paper, Scissors (unfinished),
+type 'rps' to play Rock, Paper, Scissors,
 type 'guessTheWord' to play a word-guessing game,
 or type 'password' to test the strength of a password.
 """)
-        process_input(answer)
+    #.strip() removes extra (accidental) spaces; .lower() converts string to lowercase
+    userInput = userInput.strip().lower()
+    if greet(userInput, greetingList) == True:
+        print(userInput, ' back!')
+    elif userInput == "math":
+        calc()
+    elif userInput == "kpop":
+        kpopBandNameGenerator()
+    elif userInput == "rps" or userInput == "rock paper scissors":
+        rps()
+    elif userInput == "guesstheword":
+        guessTheWord()
+    elif userInput == "password":
+        testPassword()
+    else:
+        default()
 
 # DON'T TOUCH! Setup code that runs your main() function. They need to be at the bottom of all of your programs.
 if __name__ == "__main__":

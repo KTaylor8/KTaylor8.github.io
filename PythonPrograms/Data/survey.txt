@@ -1,3 +1,0 @@
-
-{"l": {"name": "l", "age": "l", "hometown": "l", "DOB": "l"}, "p": {"name": "p", "age": "p", "hometown": "p", "DOB": "p"}}
-************
