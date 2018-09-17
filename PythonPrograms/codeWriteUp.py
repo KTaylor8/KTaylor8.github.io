@@ -7,23 +7,23 @@ noList = ['no','nope','not at all','absolutely not',"yesn't","yesnt",'negative',
 def kpopBandNameGenerator():
     doAgain = 'yes'
     wordList = ["Best", "Idol", "Perfect", "Ubiquitous", "Majestic", "Mystical", "Awesome", "Super"]
-    print("\nWelcome to the Kpop Band Name Generator!")
     while doAgain in yesList:
-        name = []
-        while len(name) < randint(3,7):
-            #chooses name parts (doesn't show) w/o repeating words; first Generates a random integer to choose words.
+        nameList = []
+        #chooses name parts (doesn't show) that are added to the nameList to make a name of reasonable length
+        while len(nameList) < randint(3,7):
+            #first generates a random integer to choose words from wordList
             randIndex = randint(0, len(wordList)-1)
-            if wordList[randIndex] not in name:
-                name.append(wordList[randIndex])
+            #ensures no word repeating
+            if wordList[randIndex] not in nameList:
+                nameList.append(wordList[randIndex])
         #prints name acronym; I wanted it to be in the same line; it should work for any length name below the max
-        print("\nYour band's name is ready!:")
-        #turns list strings into one string; map({function},{sequence to apply function to})
-        name_str = ' '.join(map(str, name))
+        print("\nHere is your band name:")
+        #turns list of strings into one string; map({function},{sequence to apply function to})
+        name_str = ' '.join(map(str, nameList))
         #Turns one string into acronym & prints
         #str.join(separator) returns string in which string elements of sequence are joined by str separator
         #str.split(separator) returns list of strings formed from breaking up the str string at the separators; default separator is whitespace 
-        #x = # elements in in name_str string list from .split()
-        #strings are also lists of characters
+        #x = # elements in in name_str string list from .split();     also, strings are lists of characters
         #in this case, returns string in which 1st element in every word in name_str is joined directly together (by nothing)
         print(''.join(x[0] for x in name_str.split()))
         print("\nThis stands for...\n", name_str)
