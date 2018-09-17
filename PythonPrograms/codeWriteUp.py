@@ -1,8 +1,8 @@
 #imports the ability to get a random number (we will learn more about this later!)
 from random import *
 #static lists that apply to whole program for checking many user responses that share a single intent:
-yesList = ['yes','yeah','sure','okay','ok','why not','yeet','yep','yup','si','affirmative','of course','always']
-noList = ['no','nope','not at all','absolutely not',"yesn't","yesnt",'negative','never','of course not']
+yesList = ['yes','yeah','sure','okay','ok','why not', 'why not?','yeet','yep','yup','si','affirmative','of course', 'definitively', 'definitely', 'always']
+noList = ['no','nope', 'naw', 'not at all','absolutely not','definitely not',"yesn't","yesnt",'negative','never','of course not']
 
 def kpopBandNameGenerator():
     doAgain = 'yes'
@@ -80,7 +80,7 @@ def doAgainErrorCheck(doAgainQuestion):
     while True:
         doAgain = input(doAgainQuestion).strip().lower()
         if doAgain in yesList or doAgain in noList:
-            #If in yesList, function will loop again, and if in noList it will not loop
+            #after return breaks out of function definition: if in yesList, function will loop again, and if in noList it will not loop
             return(doAgain)
         else:
             defaultError()
