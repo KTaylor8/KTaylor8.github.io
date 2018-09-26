@@ -115,7 +115,6 @@ def guessTheWord():
                 if "_" not in displayedLetters:
                     print(mysteryWord,"Congratulations! You won!")
                     break
-
             #if guess not in mysteryWord
             else:
                 #check if the user inputted more than one letter (no penalty)
@@ -123,12 +122,8 @@ def guessTheWord():
                     print("That was more than one letter, but you won't be penalized. Try again.")
                 else:
                     lives -= 1
-                    #check if letter was previously guessed
-                    if guess in guessedList:
-                        print("You already guessed that letter.")
-                    else:
-                        print(guess,"is not in the mystery word.")
-                        guessedList.append(guess)
+                    print(guess,"is not in the mystery word.")
+                    guessedList.append(guess)
                     #lost game; the while loop will end
                     if lives == 0:
                         print("\nGame over! You lost.\nThe word was",mysteryWord)
