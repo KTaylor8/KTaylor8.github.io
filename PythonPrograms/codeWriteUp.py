@@ -1,5 +1,5 @@
 #imports the ability to get a random number (from [module] import [specific thing]); * means all functions and constants
-from random import *
+from random import randint
 #static lists that apply to whole program for checking many user responses that share a single intent:
 yesList = ['yes','yeah','sure','okay','ok','why not', 'why not?','yeet','yep','yup','si','affirmative','of course','definitely','always']
 noList = ['no','nope', 'naw', 'not at all','absolutely not','definitely not',"yesn't","yesnt",'negative','never','of course not']
