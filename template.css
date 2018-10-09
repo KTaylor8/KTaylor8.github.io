@@ -1,3 +1,4 @@
+/* Linees up to 11 fit the length of the window to the length of the content*/
 html,
 body {
   height: 100%;
@@ -9,8 +10,7 @@ body {
 .content {
   flex: 1 0 auto;
 }
-/* change name below to match that of the footer you want
-to stick at the bottom of the page */
+/* change name below to match that of the footer you want to stick at the bottom of the page */
 footer {
   flex-shrink: 0;
 }

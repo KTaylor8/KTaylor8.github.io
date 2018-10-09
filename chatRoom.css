@@ -50,6 +50,7 @@ body {
 }
 
 .postBoxes {
+  display: none;
   background-color: #f4c2c2;
   border-style: solid;
   border-color: #9370db;
