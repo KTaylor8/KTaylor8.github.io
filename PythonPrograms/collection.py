@@ -33,16 +33,19 @@ def doAgainCheck(doAgainQuestion):
 
 def math():
     doAgain = 'yes'
-    calcTypeList = ['addition', 'subtraction', 'multiplication',
-                    'division', 'averages']
+    calcTypeList = ['addition','subtraction','multiplication',
+                  'division','averages']
     while doAgain in yesList:
         calcChosen = input(
-            "\nChoose one of the following calculations:"
+            '\nChoose one of the following calculations:'
             f"{', '.join(map(str, calcTypeList))}."
-            "This calculator will only take single numbers,"
+            'This calculator will only take single numbers,'
             "not expressions, when 'a number' is requested."
         ).strip().lower()
-    
+
+    # while doAgain in yesList:
+    #     calcChosen = input(f"\nChoose one of the following calculations: {', '.join(map(str, calcTypeList))}. This calculator will only take single numbers, not expressions, when 'a number' is requested.").strip().lower()
+
         while calcChosen not in calcTypeList:
             calcChosen = input(
                 "\nThat's not an available calculation. Try again."
@@ -258,7 +261,8 @@ def guessTheWord():
                     #to justify a string (r for right or l for left):
                     #[string].rjust([width],'[single separator]')
                     #replace rjust with center to put between separator
-                    print("".rjust(72, '~'), #just wanted to try .rjust()
+                    print(
+                        "".rjust(72, '~'), #just wanted to try .rjust()
                         f"\n{mysteryWord}\n"
                         "Congratulations! You won!"
                     )
