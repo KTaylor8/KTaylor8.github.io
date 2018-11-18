@@ -1,5 +1,6 @@
 import nltk  # natural language toolkit
 import json
+import os
 # sentiment is the connotation of a word (positive or negative)
 
 
@@ -56,8 +57,8 @@ def classifyResp(userResp):
     # but for now it just prints the overall sentiment
     mood = classifier.classify(extractedFeatures)
     print(f'Your response was overall {mood}')
-    moodData = {userResp: mood}
-    return moodData
+    moodDataDict = {userResp: mood}
+    return moodDataDict
 
 
 def getRespsWords(resps):
@@ -106,16 +107,33 @@ def extractFeatures(sortedWords, userResp):
     return features
 
 
-def storeMood(moodData):
+def storeMood(moodDataDict):
     """
     Function writes dictionaries of {resp: mood} to json file
 
     moodData = (user input string, sentiment)
 
     """
-    f = open("moodTrackerData.json", "a")
-    f.write(f"\n{moodData}")
-    # CURRENTLY NOT STORED IN CORRECT FORMAT
+    moodDataStr = ("{\n" +
+                   f"{moodDataDict.key()}" +
+                   ":" +
+                   f"{moodDataDict.value()}" +
+                   "\n}")
+    f = open("moodTrackerData.json", "a+")
+    if os.stat(f).st_size == 0:  # if file empty
+        f.write("{\n" +
+                f"{moodDataStr}" +
+                "\n}"
+                )
+    else:
+        f.seek(-1, os.SEEK_END)
+        f.truncate()  # delete ending } in file
+        # convert from dict {userResp: mood} to string {\n dict \n}
+        f.write(f"\n{moodDataStr}" +
+                "\n}"
+                )
+
+    f.close()
 
 
 def main():
@@ -134,6 +152,7 @@ def main():
         print(classifyResp(userResp))
         # storeMood(classifyResp(userInput))
         # repeat = input("Do you want to make another entry?\n").lower()
+        # DEBUGGING
 
 
 if __name__ == "__main__":
