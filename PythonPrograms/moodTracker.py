@@ -114,6 +114,7 @@ def storeMood(moodDataDict):
     moodData = (user input string, sentiment)
 
     """
+    # I THINK YOU'RE SUPPOSED TO USE JSON.DUMP()
     moodDataStr = ("{\n" +
                    f"{moodDataDict.key()}" +
                    ":" +
