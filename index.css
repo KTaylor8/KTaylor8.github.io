@@ -1,3 +1,24 @@
+/* Linees up to 15 fit the length of the window to the length of the content */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-image: url(images/jade.jpg);
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+  font-family: 'Kalam';
+}
+
+.defaultHide {
+  display: none;
+}
+
 #title {
   color:blue;
   font-size: 34px;

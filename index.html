@@ -1,66 +1,83 @@
 <!DOCTYPE html>
 <html>
 <!--the heading commands automatically act like a paragraph-->
-  <head>
 
-    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Do+Hyeon"
-          rel="stylesheet">
-    <link rel="stylesheet"
-          href="myStyles.css">
+<head>
 
-    <script src = "myScript.js"> </script>
+  <title>Home</title>
+  <!--Optional tab icon: <link rel="shortcut icon" type="image/png" href=" IMAGE ADDRESS  " /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--importing stylesheets common to most pages-->
+  <link rel="stylesheet" href="importFonts.css" type="text/css">
+  <!--CSS & JS specific to this page-->
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js"> </script>
 
-  </head>
+</head>
 
-  <body>
-  <div id="button"><button onclick="document.getElementById('button').innerHTML=Date()">See the date</button></div>
-  <p>I have also created a safe space website prototype for girls called <a href = "chatrIndex.html">Chatr</a>.</p>
-  <div id="title">Intro to Kpop</div>
+<body>
+  <div class="content">
+    <div class='defaultShow'>
+      <p>Enter the password to access this part of the website:
+        <input type="password" id="indexAccessPassword"></p>
+      <p><input type="submit" value="Submit" onclick="indexAccessCheck(event)" /></p>
+    </div>
 
-  <h1>By Katie Taylor</h1>
+    <div class='defaultHide'>
+      <div id="button"><button onclick="document.getElementById('button').innerHTML=Date()">See the date</button></div>
+      <p>I have also created a safe space website prototype for girls called <a href="chatrIndex.html">Chatr</a>.</p>
+      <div id="title">Intro to Kpop</div>
 
-  <h4>Let’s lay out some of the lingo:</h4>
-  <div>Bias: your favorite member of a group</div>
-  <div>Ultimate bias: your favorite kpop idol ever</n>
-  <div>Bias wrecker: not supposed to be your favorite member but keeps catching your attention</div>
-  <div>Maknae/Magnae: the youngest member of a group  <em>Note: the g/k turns into an ng sound due to the an exception in pronunciation rules.</em></div>
-  <div>Fighting: general words of encouragement used to cheer on others</div>
+      <h1>By Katie Taylor</h1>
 
-  <p>Based on the <a href = "https://merriam-webster.com/dictionary/dialect">definition of a dialect</a>, if the great kpop fandom counts as a group, kpop slang is a dialect.</p>
+      <h4>Let’s lay out some of the lingo:</h4>
+      <div>Bias: your favorite member of a group</div>
+      <div>Ultimate bias: your favorite kpop idol ever</div>
+      <div>Bias wrecker: not supposed to be your favorite member but keeps catching your attention</div>
+      <div>Maknae/Magnae: the youngest member of a group <em>Note: the g/k turns into an ng sound due to the an
+          exception
+          in pronunciation rules.</em></div>
+      <div>Fighting: general words of encouragement used to cheer on others</div>
 
-  <h4>Random Info:</h4>
-  <p>Kpop groups (and Asian pop groups in general) usually have more members than Western bands</p>
-  <div><img alt = "Kpop band Seventeen has 13 young men"
-            src = "https://0.soompi.io/wp-content/uploads/2017/10/02200846/SEVENTEEN.jpg"
-            class="grow" width=40% height=40% ></div>
-  <div>6-9 members is standard.</div>
+      <p>Based on the <a href="https://merriam-webster.com/dictionary/dialect">definition of a dialect</a>, if the
+        great
+        kpop fandom counts as a group, kpop slang is a dialect.</p>
 
-  <div><img alt = "Kpop group Black Pink has only 4 girls"
-            src="https://0.soompi.io/wp-content/uploads/2018/01/25204042/BLACKPINK-1.jpg"
-            class="grow" width=40% height=40% ></div>
+      <h4>Random Info:</h4>
+      <p>Kpop groups (and Asian pop groups in general) usually have more members than Western bands</p>
+      <div><img alt="Kpop band Seventeen has 13 young men" src="https://0.soompi.io/wp-content/uploads/2017/10/02200846/SEVENTEEN.jpg"
+          class="grow" width=40% height=40%></div>
+      <div>6-9 members is standard.</div>
 
-  <div>Though smaller groups exist.</div>
+      <div><img alt="Kpop group Black Pink has only 4 girls" src="https://0.soompi.io/wp-content/uploads/2018/01/25204042/BLACKPINK-1.jpg"
+          class="grow" width=40% height=40%></div>
 
-  <p> </p>
+      <div>Though smaller groups exist.</div>
 
-  <div><img alt = "Kpop group B.TO.B propel themselves up from the group in sync." src = "http://3.bp.blogspot.com/-j45UrhdfMxI/TclyfqIzAHI/AAAAAAAAAvQ/3DO3aJI4mZ4/s1600/tumblr_ljera1w32c1qdzxx3o1_400.gif"></div>
-  <div>Nope, that's not in reverse. It's called the scorpion dance.</div>
+      <p> </p>
 
-  <h4>Example songs:</h4>
-  <div><a href = "https://youtube.com/watch?v=AAbokV76tkU">Fantastic Baby by Big Bang</a></div>
-  <div><a href = "https://youtube.com/watch?v=u6unJQownW4">District 9 by Stray Kids</a></div>
+      <div><img alt="Kpop group B.TO.B propel themselves up from the group in sync." src="http://3.bp.blogspot.com/-j45UrhdfMxI/TclyfqIzAHI/AAAAAAAAAvQ/3DO3aJI4mZ4/s1600/tumblr_ljera1w32c1qdzxx3o1_400.gif"></div>
+      <div>Nope, that's not in reverse. It's called the scorpion dance.</div>
 
-  <p> </p>
+      <h4>Example songs:</h4>
+      <div><a href="https://youtube.com/watch?v=AAbokV76tkU">Fantastic Baby by Big Bang</a></div>
+      <div><a href="https://youtube.com/watch?v=u6unJQownW4">District 9 by Stray Kids</a></div>
 
-  <div>Click the buttons below to move the image</div>
-  <input type="button" value="Left" onclick="moveLeft();" />
-  <input type="button" value="Right" onclick="moveRight();" />
-  <div>Test</div>
+      <p> </p>
 
-  <div><img id="myImage" src="https://rlv.zcache.com.au/i_love_kpop_sticker-r1a4b00f673b84d179db6c37db3002794_v9waf_8byvr_540.jpg" width=40% height=40% /></div>
+      <div>Click the buttons below to move the image</div>
+      <input type="button" value="Left" onclick="moveLeft();" />
+      <input type="button" value="Right" onclick="moveRight();" />
+      <div>Test</div>
 
-  <!-- <div>Here is a fun non-Kpop-related Scratch game:</div>
-  <iframe allowtransparency="true" width="485" height="402" src="//scratch.mit.edu/projects/embed/236157970/?autostart=false" frameborder="0" allowfullscreen></iframe> -->
+      <div><img id="myImage" src="https://rlv.zcache.com.au/i_love_kpop_sticker-r1a4b00f673b84d179db6c37db3002794_v9waf_8byvr_540.jpg"
+          width=40% height=40% /></div>
+    </div>
+  </div>
 
-  </body>
+  <footer>
+
+  </footer>
+</body>
 <html>
