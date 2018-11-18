@@ -4,6 +4,10 @@
 #expected return value
 #"""
 
+#important: if you want to print a succession of things in the same line:
+#forever loop: print("string w/ looping variable", end=" ")
+#this sets the print end character as a space rather than a default new line
+
 #line cont. formatting: press enter, put a \ at the very end of the first line
 #(no spaces can be after the \. Alt Z to toggle the word wrap to check)
 #wildcard imports using * should be avoided
@@ -104,7 +108,7 @@ def calculate(calcType, numList):
     #doctest:
     """
     >>> calculate('averages', [3,4,4,1])
-    3
+    3.0
 
     """
     currentNum = numList[0]
@@ -385,7 +389,7 @@ def main():
             "type 'rps' to play Rock Paper Scissors,"
             "type 'guessTheWord' to play a word-guessing game,"
             "type 'password' to test the strength of a password,"
-            "or type 'quit' to end the program."
+            "or type 'quit' to end the program.\n"
         ).strip().lower()
 
         if greet(userInput, greetingList) == True:
