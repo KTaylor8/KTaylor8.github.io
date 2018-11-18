@@ -131,7 +131,8 @@ def calculate(calcType, numList):
 
 def kpopBandNameGenerator():
     doAgain = 'yes'
-    possibleWordList = ["Best", "Idol", "Perfect", "Ubiquitous", "Majestic",                       "Mystical", "Awesome", "Super"]
+    possibleWordList = ["Best", "Idol", "Perfect", "Ubiquitous", "Majestic",
+                        "Mystical", "Awesome", "Super"]
     while doAgain in yesList:
         nameList = []
         #chooses reasonable name length
@@ -220,7 +221,8 @@ def rps():
 
 def guessTheWord():
     doAgain = 'yes'
-    possibleWordList = ("thaumaturgy", "serendipity", "prestidigitation",                          "thorough", "rhythm", "squirrel")
+    possibleWordList = ("thaumaturgy", "serendipity", "prestidigitation",
+                        "thorough", "rhythm", "squirrel")
 
     while doAgain in yesList:
         lives = 6

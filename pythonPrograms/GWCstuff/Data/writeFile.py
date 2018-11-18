@@ -1,0 +1,5 @@
+myFile = open("survey.txt", 'w')
+myFile.write('\n')
+myFile.write(users)
+myFile.write('\n')
+myFile.write("************")
