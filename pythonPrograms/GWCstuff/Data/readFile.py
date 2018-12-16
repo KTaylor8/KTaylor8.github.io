@@ -1,4 +1,4 @@
 import json
-answersData = open('answers.json', 'r')
+answersData = open('read.json', 'r+')
 readData = json.load(answersData)
 print(readData)

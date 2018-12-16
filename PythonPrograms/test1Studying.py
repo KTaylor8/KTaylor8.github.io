@@ -11,10 +11,10 @@
 
 # files i/o:
 # {fileObject} = open({fileNameString}, {accessModeString})
-# w = write only, OVERWRITES FILE IF EXISTS
-# w+ = read and write, OVERWRITES FILE IF EXISTS
+# w = write only, WIPES THE FILE WHEN OPENING IF EXISTS
+# w+ = read and write, WIPES THE FILE WHEN OPENING IF EXISTS
 # access modes:
-# r+ = read AND write but doesn't overwrite file
+# r+ = read AND write but doesn't wipe file
 # r = read only
 # a = append only
 # a+ = read and append
