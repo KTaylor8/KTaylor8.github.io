@@ -17,7 +17,7 @@ def getRespData():
     neutResps = list of tuples (text string, "neutral")
     negResps = list of tuples (text string, "negative")
 
-    Note: no parameter, so no doctest
+    Note: no parameters, so no doctest
     """
 
     posStrings = []
@@ -163,6 +163,11 @@ def extractFeatures(sortedWords, userResp):
 def storeMood(entry):
     """
     Function writes dictionary {resp: mood} to json file
+
+    entry = new user entry
+    dataFile = read file of json mood data
+    moodData = updated json mood data to store
+    oldMoodData = json mood data (user entries) stored
     """
     with open("moodTrackerData.json", "r+") as dataFile:
         # if os.stat("moodTrackerData.json").st_size == 0:  # file empty
@@ -179,6 +184,17 @@ def storeMood(entry):
 
 
 def graphSentiments():
+    """
+    Function graphs sentiment of entries vs entry number.
+
+    dataFile = read file of json mood data
+    entries = user entries stored (dictionary)
+    entriesCount = list of number of entries (used for x-axis tick labels)
+    entry = each entry in the dictionary of entries
+    sentimentList = list of sentiments (used for y-axis tick labels)
+    mood = values in dictionary of entries
+    subplot = graph created (plot as part of new figure)
+    """
     with open("moodTrackerData.json", "r+") as dataFile:
         entries = json.load(dataFile)
         entriesCount = [entry for entry in range(len(entries))]
