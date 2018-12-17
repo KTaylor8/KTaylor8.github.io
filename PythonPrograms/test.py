@@ -84,8 +84,13 @@ def testReferencingNests():
         print(el)
 
 
+def testKeys():
+    dict = {'Name': 'Zara', 'Age': 7, 8.0: 'cat'}
+    print(dict.keys())
+
+
 def main():
-    testReferencingNests()
+    testKeys()
 
 
 if __name__ == "__main__":
