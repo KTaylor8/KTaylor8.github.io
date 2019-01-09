@@ -1,7 +1,6 @@
 import nltk  # natural language toolkit
 import json
 import os
-from matplotlib import pyplot as plt
 
 # sentiment is the connotation of a word (positive or negative)
 
@@ -11,17 +10,14 @@ def getRespData():
     Function prepares lists of text string and sentiment data tuples from imported csv file Twitter data to improve accuracy of sentiment classifications.
 
     posStrings = list of strings with positive sentiment read from data file
-    neutStrings = list of strings with neutral sentiment read from data file
     negStrings = list of strings with negative sentiment read from data file
     posResps = list of tuples (text string, "positive")
-    neutResps = list of tuples (text string, "neutral")
     negResps = list of tuples (text string, "negative")
 
-    Note: no parameters, so no doctest
+    Note: no parameter, so no doctest
     """
 
     posStrings = []
-    neutStrings = []
     negStrings = []
 
     # training data: (response, sentiment)
@@ -30,23 +26,19 @@ def getRespData():
             line = line.strip().split(",", 1)  # split at first comma only
             if line[0] == '4':  # CURRENTLY IGNORING NEURTRAL POLARITY 2
                 posStrings.append(line[1])
-            elif line[0] == '2':
-                neutStrings.append(line[1])
             elif line[0] == '0':
                 negStrings.append(line[1])
     posResps = [(string, "positive") for string in posStrings]
-    neutResps = [(string, "neutral") for string in neutStrings]
     negResps = [(string, "negative") for string in negStrings]
 
-    return posResps, neutResps, negResps
+    return posResps, negResps
 
 
-def initClassifier(posResps, neutResps, negResps):
+def initClassifier(posResps, negResps):
     """
     Function prepares sentiment classifier based training response examples (to determine if text is overall positive or negative in meaning),
 
     posResps = list of (text string, "positive")
-    neutResps = list of tuples (text string, "neutral")
     negResps = list of (text string, "negative")
     filteredWords = changing list of words longer than 2 characters
     resps = list of (list of polar words in a string, sentiment)
@@ -66,7 +58,7 @@ def initClassifier(posResps, neutResps, negResps):
     wordsTrainingList = []
 
     # match filtered (possibly polar) words to sentiment for each string
-    for (string, sentiment) in posResps + neutResps + negResps:
+    for (string, sentiment) in posResps + negResps:
         # for el in string.split():
         #     if len(el) >= 3:  # shorter words neutral
         #         filteredWords.append(el.lower())
@@ -163,11 +155,6 @@ def extractFeatures(sortedWords, userResp):
 def storeMood(entry):
     """
     Function writes dictionary {resp: mood} to json file
-
-    entry = new user entry
-    dataFile = read file of json mood data
-    moodData = updated json mood data to store
-    oldMoodData = json mood data (user entries) stored
     """
     with open("moodTrackerData.json", "r+") as dataFile:
         # if os.stat("moodTrackerData.json").st_size == 0:  # file empty
@@ -184,28 +171,15 @@ def storeMood(entry):
 
 
 def graphSentiments():
-    """
-    Function graphs sentiment of entries vs entry number.
-
-    dataFile = read file of json mood data
-    entries = user entries stored (dictionary)
-    entriesCount = list of number of entries (used for x-axis tick labels)
-    entry = each entry in the dictionary of entries
-    sentimentList = list of sentiments (used for y-axis tick labels)
-    mood = values in dictionary of entries
-    subplot = graph created (plot as part of new figure)
-    """
     with open("moodTrackerData.json", "r+") as dataFile:
         entries = json.load(dataFile)
         entriesCount = [entry for entry in range(len(entries))]
         sentimentList = [mood for mood in entries.values()]
-    subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in figure
-    subplot.plot(entriesCount, sentimentList)  # x, y, marker
-    subplot.set_yticklabels(["negative", "neutral", "positive"])  # order ticks
-    plt.ylabel('Sentiment')
-    plt.xlabel('Entry Number')
-    plt.title('Sentiment vs Entry Number Graph')
-    plt.show()
+    pyplot.plot(entriesCount, sentimentList)  # x, y, marker
+    pyplot.ylabel('Sentiment')
+    pyplot.xlabel('Entry Number')
+    pyplot.title('Sentiment vs Entry Number Graph')
+    pyplot.show()
 
 
 def main():
@@ -216,13 +190,14 @@ def main():
     userResp = user's response about their day
     sortedWords = list of filtered words ordered by decreasing frequency
     classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
-    yesList = list of possible responses to the repeat program question used             to determine whther the user wants to perform further actions
     """
     yesList = ['yes', 'yeah', 'sure', 'okay', 'ok', 'why not', 'yeet', 'yep', 'yup',
                'si', 'affirmative', 'of course', 'always']
+    noList = ['no', 'nope', 'not at all', 'absolutely not', "yesn't", "yesnt",
+              'negative', 'never', 'of course not']
     repeat = 'yes'
-    posResps, neutResps, negResps = getRespData()
-    sortedWords, classifier = initClassifier(posResps, neutResps, negResps)
+    posResps, negResps = getRespData()
+    sortedWords, classifier = initClassifier(posResps, negResps)
     while repeat == "yes":
         userResp = input(
             "\nTo make a new entry, type 'entry',\n"
@@ -237,7 +212,7 @@ def main():
             # print(classifyResp(userResp))  # for debugging
             storeMood(classifyResp(sortedWords, classifier, userResp))
             repeat = input(
-                "\nDo you want to do another action?\n"
+                "\nDo you want to make another entry?\n"
             ).lower()
         elif userResp == "graph":
             graphSentiments()
