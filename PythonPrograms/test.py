@@ -89,8 +89,15 @@ def testKeys():
     print(dict.keys())
 
 
+def testMixedSort():
+    list1 = ["1", "2.0", "a", "1.35", "b", "2"]
+    list1.sort()
+    # lists numbers in increasing order then letters
+    print(list1)
+
+
 def main():
-    testKeys()
+    testMixedSort()
 
 
 if __name__ == "__main__":

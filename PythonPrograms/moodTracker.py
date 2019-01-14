@@ -28,24 +28,25 @@ def getRespData():
     # ADD MORE TRAINING DATA AND MAKE IT WORK W/ DIFFERENT SOURCES & FORMATS (ORDERS AND QUOTES OR NO QUOTES)
     numDataSources = 3
     fileName = "stanfordSentiment140TweetData.csv"
-    # !!!! for some reason the positive scan ends at line 235 (neutral and neg finish fully)
+    # !!!! for some reason the positive scan of the Stanford ends at line 235 (neutral and neg finish fully) but I couldn't figure out how to fix it
 
     # for i in range(numDataSources):
     with open(fileName, "r") as dataFile:
         for line in dataFile:
-            line = line.split(",", 1)  # split at first comma
-            string = line[1].strip('\n"')  # remove \n and " from start & end
+            # strip \n, convert to list of str, split at 1st comma:
+            line = line.strip().split(",", 1)
+            line.sort()  # puts num before str in list
+            string = line[1].strip('"')  # removes " from start & end
             if line[0] == '4':
                 posStrings.append(string)
             elif line[0] == '2':
                 neutStrings.append(string)
             elif line[0] == '0':
                 negStrings.append(string)
-
-    #     if i == 0:
-    #         fileName = "dataHubTweetData.csv"
-    #     elif i == 1:
-    #         fileName = "customData.csv"
+    # if i == 0:
+    #     fileName = "dataHubTweetData.csv"
+    # elif i == 1:
+    #     fileName = "customData.csv"
 
     posResps = [(string, "positive") for string in posStrings]
     neutResps = [(string, "neutral") for string in neutStrings]
