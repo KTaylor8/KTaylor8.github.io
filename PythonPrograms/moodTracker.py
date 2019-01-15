@@ -28,32 +28,32 @@ def getRespData():
     # ADD MORE TRAINING DATA AND MAKE IT WORK W/ DIFFERENT SOURCES & FORMATS (ORDERS AND QUOTES OR NO QUOTES)
     numDataSources = 3
     fileName = "stanfordSentiment140TweetData.csv"
-    # !!!! for some reason the positive scan of the Stanford ends at line 235 (neutral and neg finish fully) but I couldn't figure out how to fix it
 
-    # for i in range(numDataSources):
-    with open(fileName, "r") as dataFile:
-        for line in dataFile:
-            # strip \n, convert to list of str, split at 1st comma:
-            line = line.strip().split(",", 1)
-            line.sort()  # puts num before str in list
-            string = line[1].strip('"')  # removes " from start & end
-            if line[0] == '4':
-                posStrings.append(string)
-            elif line[0] == '2':
-                neutStrings.append(string)
-            elif line[0] == '0':
-                negStrings.append(string)
-    # if i == 0:
-    #     fileName = "dataHubTweetData.csv"
-    # elif i == 1:
-    #     fileName = "customData.csv"
+    for i in range(numDataSources+10):  # adds customData.csv strs 11 times
+        with open(fileName, "r") as dataFile:
+            for line in dataFile:
+                # strip \n, convert to list of str, split at 1st comma:
+                line = line.strip().split(",", 1)
+                line.sort()  # puts num before str in list
+                string = line[1].strip('"')  # removes " from start & end
+                if line[0] == '4':
+                    posStrings.append(string)
+                elif line[0] == '2':
+                    neutStrings.append(string)
+                elif line[0] == '0':
+                    negStrings.append(string)
+        dataFile.close()
+    if i == 0:
+        fileName = "dataHubTweetData.csv"
+    elif i == 1:
+        fileName = "customData.csv"
 
     posResps = [(string, "positive") for string in posStrings]
     neutResps = [(string, "neutral") for string in neutStrings]
     negResps = [(string, "negative") for string in negStrings]
     # NEED TO ADD EVEN MORE DATA SOURCES
 
-    print(posResps)  # debug
+    # print(f"{posResps[230:]}")  # if list too long to show: it'll cut off end
     return posResps, neutResps, negResps
 
 
@@ -193,7 +193,7 @@ def storeMood(entry):
             # throws docoder error if file empty
             oldMoodData = json.load(dataFile)
             moodData = {**oldMoodData, **entry}  # consolidates duplicate pairs
-        # (you can't open the same file w/ w within the with statement code block)
+        # (you can't open the same file w/ w within with statement code block)
         dataFile.seek(0)
         dataFile.truncate()
         dataFile.write(json.dumps(moodData))
@@ -245,30 +245,30 @@ def main():
                'si', 'affirmative', 'of course', 'always']
     repeat = 'yes'
     posResps, neutResps, negResps = getRespData()
-    # sortedWords, classifier = initClassifier(posResps, neutResps, negResps)
-    # while repeat == "yes":
-    #     userResp = input(
-    #         "\nTo make a new entry, type 'entry',\n"
-    #         "to make a graph of your mood over the course of your entries so far, type 'graph',\n"
-    #         "to delete all of your entries, type 'delete',\n"
-    #         "or to exit the program, type 'quit'.\n"
-    #     ).strip().lower()
-    #     if userResp == "entry":
-    #         userResp = input(
-    #             "\nPlease describe your day and how you feel about it.\n"
-    #         ).lower()
-    #         storeMood(classifyResp(sortedWords, classifier, userResp))
-    #         repeat = input(
-    #             "\nDo you want to do another action?\n"
-    #         ).lower()
-    #     elif userResp == "graph":
-    #         graphSentiments()
-    #     elif userResp == "delete":
-    #         deleteEntries()
-    #     elif userResp == "quit":
-    #         repeat = "no"
-    #     else:
-    #         print("Error! Try again.")
+    sortedWords, classifier = initClassifier(posResps, neutResps, negResps)
+    while repeat == "yes":
+        userResp = input(
+            "\nTo make a new entry, type 'entry',\n"
+            "to make a graph of your mood over the course of your entries so far, type 'graph',\n"
+            "to delete all of your entries, type 'delete',\n"
+            "or to exit the program, type 'quit'.\n"
+        ).strip().lower()
+        if userResp == "entry":
+            userResp = input(
+                "\nPlease describe your day and how you feel about it.\n"
+            ).lower()
+            storeMood(classifyResp(sortedWords, classifier, userResp))
+            repeat = input(
+                "\nDo you want to do another action?\n"
+            ).lower()
+        elif userResp == "graph":
+            graphSentiments()
+        elif userResp == "delete":
+            deleteEntries()
+        elif userResp == "quit":
+            repeat = "no"
+        else:
+            print("Error! Try again.")
 
 
 if __name__ == "__main__":
