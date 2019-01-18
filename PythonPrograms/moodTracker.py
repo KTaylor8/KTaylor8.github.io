@@ -196,6 +196,8 @@ def storeMood(entry):
     dataFile = read file of json mood data
     moodData = updated json mood data to store
     oldMoodData = json mood data (user entries) stored
+
+    Note: nothing is printed because it just writes to a file, so no doctest
     """
     with open("moodTrackerData.json", "r+") as dataFile:
         # if os.stat("moodTrackerData.json").st_size == 0:  # file empty
@@ -222,6 +224,8 @@ def graphSentiments():
     sentimentList = list of sentiments (used for y-axis tick labels)
     mood = values in dictionary of entries
     subplot = graph created (plot as part of new figure)
+
+    Note: no parameters, so no doctest
     """
     with open("moodTrackerData.json", "r+") as dataFile:
         entries = json.load(dataFile)
@@ -239,6 +243,8 @@ def graphSentiments():
 def deleteEntries():
     """
     This simple function overwrites the json file storing the entry data in order to clear it.
+
+    Note: no parameters, so no doctest
     """
     open("moodTrackerData.json", "w").close()
 
@@ -252,6 +258,8 @@ def main():
     sortedWords = list of filtered words ordered by decreasing frequency
     classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
     yesList = list of possible responses to the repeat program question used             to determine whther the user wants to perform further actions
+
+    Note: no parameters, so no doctest
     """
     yesList = [
         'yes', 'yeah', 'sure', 'okay', 'ok', 'why not', 'yeet', 'yep', 'yup', 'si', 'affirmative', 'of course', 'always'
