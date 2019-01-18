@@ -3,12 +3,10 @@ import json
 import os
 from matplotlib import pyplot as plt
 
-# sentiment is the connotation of a word (positive or negative)
-
 
 def getRespData():
     """
-    Function prepares lists of text string and sentiment data tuples from imported csv file Twitter data to improve accuracy of sentiment classifications.
+    The function prepares lists of text string and sentiment data tuples from multiple csv files of data (mostly imported) to improve the accuracy of the program's sentiment classifications.
 
     posStrings = list of strings with positive sentiment read from data file
     neutStrings = list of strings with neutral sentiment read from data file
@@ -16,6 +14,9 @@ def getRespData():
     posResps = list of tuples (text string, "positive")
     neutResps = list of tuples (text string, "neutral")
     negResps = list of tuples (text string, "negative")
+    files = list of file names from which I import string-sentiment data
+    dataFile = current file with data being imported
+    string = the polarized text from a line in the data file
 
     Note: no parameters, so no doctest
     """
@@ -23,14 +24,16 @@ def getRespData():
     posStrings = []
     neutStrings = []
     negStrings = []
+    files = [
+        "stanfordSentiment140TweetData.csv",
+        "dataHubTweetDataFull.csv",
+    ]
+    for i in range(10):  # adds custom data many times to outweigh other data
+        files.append("customData.csv")
 
-    # training data: (response, sentiment)
-    # ADD MORE TRAINING DATA AND MAKE IT WORK W/ DIFFERENT SOURCES & FORMATS (ORDERS AND QUOTES OR NO QUOTES)
-    numDataSources = 3
-    fileName = "stanfordSentiment140TweetData.csv"
-
-    for i in range(numDataSources+10):  # adds customData.csv strs 11 times
-        with open(fileName, "r") as dataFile:
+    for i in range(len(files)):
+        with open(files[i], "r", encoding="utf8") as dataFile:
+            # w/o this encoding some characters are undefined
             for line in dataFile:
                 # strip \n, convert to list of str, split at 1st comma:
                 line = line.strip().split(",", 1)
@@ -43,15 +46,10 @@ def getRespData():
                 elif line[0] == '0':
                     negStrings.append(string)
         dataFile.close()
-    if i == 0:
-        fileName = "dataHubTweetData.csv"
-    elif i == 1:
-        fileName = "customData.csv"
 
     posResps = [(string, "positive") for string in posStrings]
     neutResps = [(string, "neutral") for string in neutStrings]
     negResps = [(string, "negative") for string in negStrings]
-    # NEED TO ADD EVEN MORE DATA SOURCES
 
     # print(f"{posResps[230:]}")  # if list too long to show: it'll cut off end
     return posResps, neutResps, negResps
@@ -59,7 +57,7 @@ def getRespData():
 
 def initClassifier(posResps, neutResps, negResps):
     """
-    Function prepares sentiment classifier based training response examples (to determine if text is overall positive or negative in meaning),
+    The function first matches the filtered possibly polar words to their sentiment, then it prepares the sentiment classifier based on the training response examples to determine if a new given text response is overall positive, neutral or negative in tone.
 
     posResps = list of (text string, "positive")
     neutResps = list of tuples (text string, "neutral")
@@ -69,25 +67,34 @@ def initClassifier(posResps, neutResps, negResps):
     sortedWords = list of filtered words ordered by decreasing frequency
     sentimentTrainingList = list of every sentiment (for tracking num of resps)
     wordsTrainingList = list of every individual filtered word
+    ignoreWordsList = list of neutral words that are most likely accompanied                     by polarized words (I don't want too many neutral words 
+                    to overload an actually polarized statement.)
+    el = current word (element) in a list of words from a split string
     sortedWords = list of filtered words ordered by decreasing frequency
     trainingData = list of labeled feature sets [a list of tuples ({dict of                   each resp's extracted features}, resp sentiment string)]
     classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
 
-    Note: not doing a doc test run because I'm not sure how to make the classifier returned value in the right format without it being super long
+    Note: not doing a doc test run because I'm not sure how to make the classifier return a value in the right format without it being super long
     """
 
     resps = []
     filteredWords = []
     sentimentTrainingList = []
     wordsTrainingList = []
-
-    # match filtered (possibly polar) words to sentiment for each string
+    ignoreWordsList = [
+        "feel",
+        "need",
+        "want",
+    ]
+    # match filtered (possibly polar) words to sentiment for each string:
     for (string, sentiment) in posResps + neutResps + negResps:
         # for el in string.split():
         #     if len(el) >= 3:  # shorter words neutral
         #         filteredWords.append(el.lower())
-        filteredWords = [el.lower() for el in string.split() if len(
-            el) >= 3]  # CURRENTLY NOT FILTERING OUT THE @s
+        filteredWords = []
+        for el in string.split():
+            if len(el) >= 3 and el not in ignoreWordsList and el[0] != "@":
+                filteredWords.extend(el.lower())
         resps.append((filteredWords, sentiment))
         sentimentTrainingList.append(sentiment)
         wordsTrainingList.append((filteredWords))
@@ -97,9 +104,13 @@ def initClassifier(posResps, neutResps, negResps):
     # compiles training (response, sentiment) pairs and prepares classifier
     # trainingData = nltk.classify.apply_features(extractFeatures, resps)
     trainingData = [
-        (extractFeatures(sortedWords,
-                         wordsTrainingList[i]),
-         sentimentTrainingList[i]) for i in range(len(sentimentTrainingList))
+        (
+            extractFeatures(
+                sortedWords,
+                wordsTrainingList[i]
+            ),
+            sentimentTrainingList[i]
+        ) for i in range(len(sentimentTrainingList))
     ]
     classifier = nltk.NaiveBayesClassifier.train(trainingData)
     return sortedWords, classifier
@@ -107,7 +118,8 @@ def initClassifier(posResps, neutResps, negResps):
 
 def classifyResp(sortedWords, classifier, userResp):
     """
-    Classifies overall sentiment of user response, prints this, and returns dict {resp, mood}
+    This function classifies the overall sentiment of the user's response, prints it, and returns the dictionary of the mood data in the form {resp, mood}.
+
     sortedWords = list of filtered words ordered by decreasing frequency
     userResp = user's response about their day and feelings
     extractedFeatures = dict with booleons for whether or not a sorted word is                     in the user's response
@@ -128,7 +140,7 @@ def classifyResp(sortedWords, classifier, userResp):
 
 def getRespsWords(resps):
     """
-    Function separates [(filtered words), sentiment] list of pairs into list of those words only
+    The function separates a list in the paired form [(filtered words), sentiment] into a list of the filtered words only.
 
     resps = list of (list of polar words in a string, sentiment)
     sigWords = list of all filtered individual words from the string
@@ -145,10 +157,10 @@ def getRespsWords(resps):
 
 def getWordFeatures(sigWords):
     """
-    Function reorders list of filtered words by decreasing frequency
+    The function reorders the list of filtered words by decreasing frequency.
 
     sigWords = list of all filtered individual words from the string
-    sigWordsAndFreq = dictionary(?) of filtered words with their frequencies
+    sigWordsAndFreq = dictionary of filtered words with their frequencies
     sortedWords = list of filtered words wordered by decreasing frequency
     """
     sigWordsAndFreq = nltk.FreqDist(sigWords)
@@ -158,7 +170,7 @@ def getWordFeatures(sigWords):
 
 def extractFeatures(sortedWords, userResp):
     """
-    Function is a feature extractor that compares words in response to words in list of possible words so unused words can be ignored and response can be tested against the training data
+    The function is a feature extractor that compares words in response to words in list of possible words so unused words can be ignored and response can be tested against the training data.
 
     sortedWords = list of filtered words wordered by decreasing frequency
     userResp = user's response string about their day split into list
@@ -178,7 +190,7 @@ def extractFeatures(sortedWords, userResp):
 
 def storeMood(entry):
     """
-    Function writes dictionary {resp: mood} to json file
+    The function adds dictionaries in the form {resp: mood} to the json file.
 
     entry = new user entry
     dataFile = read file of json mood data
@@ -201,7 +213,7 @@ def storeMood(entry):
 
 def graphSentiments():
     """
-    Function graphs sentiment of entries vs entry number.
+    The function graphs sentiment of entries (negatuve, neutral, or positive) vs entry number so that the user can see the general trend of their mood.
 
     dataFile = read file of json mood data
     entries = user entries stored (dictionary)
@@ -226,14 +238,14 @@ def graphSentiments():
 
 def deleteEntries():
     """
-    This simple function overwrites the json file storing the entry data to clear it.
+    This simple function overwrites the json file storing the entry data in order to clear it.
     """
     open("moodTrackerData.json", "w").close()
 
 
 def main():
     """
-    Program's main process: asks user about their day to determine their mood, with the option to repeat, quit, or delete all of the stored mood data
+    The function serves as the program's main menus and loops in asking the user to chose between a variety of actions (make a new entry, graph your mood data, delete all entries, or quit the program) and calling the function for that functionality until the user quits.
 
     repeat = whether the user wants to repeat the program or not
     userResp = user's response about their day
@@ -241,8 +253,9 @@ def main():
     classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
     yesList = list of possible responses to the repeat program question used             to determine whther the user wants to perform further actions
     """
-    yesList = ['yes', 'yeah', 'sure', 'okay', 'ok', 'why not', 'yeet', 'yep', 'yup',
-               'si', 'affirmative', 'of course', 'always']
+    yesList = [
+        'yes', 'yeah', 'sure', 'okay', 'ok', 'why not', 'yeet', 'yep', 'yup', 'si', 'affirmative', 'of course', 'always'
+    ]
     repeat = 'yes'
     posResps, neutResps, negResps = getRespData()
     sortedWords, classifier = initClassifier(posResps, neutResps, negResps)
