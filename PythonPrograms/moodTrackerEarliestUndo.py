@@ -4,9 +4,6 @@ import os
 from matplotlib import pyplot as plt
 import string
 from collections import Counter
-# this copy is the earliest undo but with the data commented out + the counter
-# with only custom data it says everything is positive for some reason; more data makes it better but not as good as it was before
-# it thinks sad and bad are neutral (and it's not because they're the first two in the custom file)
 
 
 def getRespData():
@@ -92,28 +89,9 @@ def initClassifier(allResps):
     sentimentTrainingList = []
     wordsTrainingList = []
     ignoreWordsList = [  # must be lowercase and w/o punctuation
-        "feel", "need", "want", "and", "the", "then", "day", "night", "had", "have", "make", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "much", "many", "someone", "something"
+        "feel", "need", "want", "and", "then", "day", "night", "had", "have", "make", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "much", "many", "someone", "something"
     ]
 
-    # # from moodTrackerAttemptToFixFromFreqDist:
-    # for i in range(len(allResps)):
-    #     filteredWords = []
-    #     text = allResps[i][0]  # it throws tuple error if I don't make new var
-    #     textWordsList = text.split()
-    #     sentiment = allResps[i][1]
-    #     for word in textWordsList:
-    #         if len(word) >= 3 and (word not in ignoreWordsList) and \
-    #                 word != "@" and word[0:4] != "http":
-    #             word = word.translate(
-    #                 str.maketrans('', '', string.punctuation))
-    #             filteredWords.append(word)
-    #     resps.append((filteredWords, sentiment))
-    #     sentimentTrainingList.append(sentiment)
-    #     wordsTrainingList.append((filteredWords))
-    # sortedWords = getWordFeatures(getRespsWords(resps))
-    # # print(sortedWords)
-
-    # from earliest undo:
     # filter and organize words from sample data:
     for i in range(len(allResps)):
         filteredWords = []
@@ -121,19 +99,10 @@ def initClassifier(allResps):
         text = allResps[i][0]  # throws tuple error if I don't make new var
         textWordsList = text.split()
 
-        # # remove usernames incorrectly:
-        # for word in textWordsList:
-        #     if word[0] == "@":
-        #         textWordsList.remove(word)
-
-        # remove usernames correctly (similar results correctly/incorrectly):
-        wordsToRemove = []
+        # remove usernames:
         for word in textWordsList:
             if word[0] == "@":
-                wordsToRemove.append(word)
-        textWordsList = [
-            el for el in textWordsList if el not in wordsToRemove
-        ]
+                textWordsList.remove(word)
 
         # join, remove punctuation (as str, not str-split list), re-split:
         text2 = ' '.join(textWordsList)
@@ -293,7 +262,6 @@ def graphSentiments():
         entries = json.load(dataFile)
         entriesCount = [entry for entry in range(len(entries))]
         sentimentList = [mood for mood in entries.values()]
-        dataFile.close()
         subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in fig
         subplot.plot(entriesCount, sentimentList)  # x, y, marker
         subplot.set_yticklabels(["negative", "neutral", "positive"])
@@ -302,7 +270,8 @@ def graphSentiments():
         plt.title('Sentiment vs Entry Number Graph')
         plt.show()
     except json.decoder.JSONDecodeError:
-        print("Sorry. There's not enough data to graph. Make a new entry first.")
+        print("Sorry. There's no data to graph. Make a new entry first.")
+    else:
 
 
 def deleteEntries():

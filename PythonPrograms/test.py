@@ -5,6 +5,7 @@
 #     print("{}\t".format(lists[x]), end=" ")
 import json
 import os
+import string as st
 
 
 def testMergeDicts():
@@ -96,8 +97,91 @@ def testMixedSort():
     print(list1)
 
 
+def testJoin():
+    string = ".?IRea!ll.y:LikeChe,ese?!,"
+    punc = ",.!?:"
+    string = ''.join(letter for letter in string if letter not in punc)
+    print(string)
+
+
+def testMoodTrackerFiltering():
+    posResps = [
+        ("I like cheese", 0), ("http://t.co", 2), ("I hate, lots fruit", 4)
+    ]
+    ignoreWordsList = ["lots"]
+    punc = ",.;!?:()%&#$"
+    wordsTrainingList = []
+
+    for (string, sentiment) in posResps:
+        filteredWords = []
+        for word in string.split():
+            if len(word) >= 3 and (word not in ignoreWordsList) and \
+                    word[0] != "@" and word[0:4] != "http":
+                # print(word[0:3])
+                word = ''.join(
+                    char for char in word if char not in punc)  # slow
+                # switch between extend and append: extend separates each letter and idk why doesn't give error:
+                filteredWords.append(word.lower())
+        wordsTrainingList.append((filteredWords))
+    print(f"words training list: {wordsTrainingList}")
+
+
+def testRemovePunc():
+    # pR = ["I like c.heese", "http://t.co", "I hate, fr?uit"]
+    # filteredWords = []
+    # for i in range(len(pR)):
+    #     currentString = pR[i]
+    #     currentString = currentString.translate(
+    #         str.maketrans('', '', st.punctuation))
+    #     filteredWords.append(currentString)
+    # print(filteredWords)
+
+    resps = []
+    filteredWords = []
+    sentimentTrainingList = []
+    wordsTrainingList = []
+    ignoreWordsList = [
+        "feel","need","want","and","then","day","night","had","have","make","made","will","afternoon","evening","morning","get","got","receive","received"
+    ]
+    pR = [
+        ("I like c.heese", "positive"), ("http://t.co", "neutral"),
+        ("I hate, fr?uit", "negative")
+    ]
+    for i in range(len(pR)):
+        filteredWords = []
+        text = pR[i][0] #it throws tuple error if I don't make new var
+        sentiment = pR[i][1]
+        if len(text) >= 3 and (text not in ignoreWordsList) and \
+                text != "@" and text[0:4] != "http":
+            text = text.translate(
+                str.maketrans('', '', st.punctuation))
+            filteredWords.append(text)
+        resps.append((text, sentiment))
+        sentimentTrainingList.append(sentiment)
+        wordsTrainingList.append((filteredWords))
+    print(wordsTrainingList)
+
+    # # Ignore below; it doesn't work:
+    # for (text, sentiment) in posResps1:
+    #     filteredWords = []
+    #     txt = text.split()
+    #     for i in range(len(txt)):
+    #         if len(txt[i]) >= 3 and txt[i][0] != "@" and txt[i][0:4] != "http":
+    #             txt[i].translate(str.maketrans('', '', st.punctuation))
+    #             filteredWords.append(txt[i])
+    # print(filteredWords)
+
+    # posResps2 = ["I like c.heese", "http://t.co", "I hate, lots fr?uit"]
+    # for text in posResps2:
+    #     text = text.translate(
+    #         str.maketrans('', '', st.punctuation))
+
+    # print(posResps1)
+    # print(posResps2)  # idk why but the second one doesn't work
+
+
 def main():
-    testMixedSort()
+    testRemovePunc()
 
 
 if __name__ == "__main__":
