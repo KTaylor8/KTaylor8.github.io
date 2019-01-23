@@ -1,4 +1,1 @@
-{
-  "i'm happy my program is somewhat functional": "positive",
-  "second entry": "neutral"
-}
+{"i'm upset": "negative", "i'm happy my program is somewhat functional": "positive", "second entry": "neutral", "i stubbed my toe": "neutral", "i stubbed my toe, which hurt": "negative", "there was a couch at the mall": "neutral", "i went shopping at the mall and bought a bunch of new clothes. i can't wait to try them on!": "negative", "entry": "neutral", "sad": "neutral", "bad": "neutral"}

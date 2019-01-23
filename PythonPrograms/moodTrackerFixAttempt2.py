@@ -4,7 +4,9 @@ import os
 from matplotlib import pyplot as plt
 import string
 from collections import Counter
-# it thinks everything is positive with only the custom data and it thinks sad and bad are neutral unless they're together (very similar to moodTracker.py)
+# this copy is the earliest undo but with the data commented out + the counter
+# with only custom data it says everything is positive for some reason; more data makes it better but not as good as it was before
+# it thinks sad and bad are neutral (and it's not because they're the first two in the custom file)
 
 
 def getRespData():
@@ -33,7 +35,7 @@ def getRespData():
         # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
         "dataHubTweetsFull.csv",
 
-        # # crashes the program b/c it's too much data or takes too long to load; "MemoryError  Exception: No Description": https://www.kaggle.com/crowdflower/twitter-airline-sentiment/version/2
+        # crashes the program b/c it's too much data, takes too long to load: https://www.kaggle.com/crowdflower/twitter-airline-sentiment/version/2
         # "airlineTweets2.csv"
     ]
     for i in range(20):  # adds custom data many times to outweigh other data
@@ -63,16 +65,16 @@ def getRespData():
     return allResps
 
 
-def initClassifier(allResps, ignoreWordsList):
+def initClassifier(allResps):
     """
     The function first matches the filtered possibly polar words (with punctuation removed) to their sentiment, then it prepares the sentiment classifier based on the training response examples to determine if a new given text response is overall positive, neutral or negative in tone.
 
     allResps = complete list of (response, sentiment) tuples from sample data
     filteredWords = changing list of words from a string that are filtered to 
                     be useful (at least three characters long, not int the ignoreWordsList not a username (@), and not a url)
-    resps = list of (list of individual polar words, sentiment) tuples
+    resps = list of (list of polar words in a string, sentiment) tuples
     sortedWords = list of filtered words ordered by decreasing frequency
-    sentimentTrainingList = list of every sentiment (for tracking num of                               responses)
+    sentimentTrainingList = list of every sentiment (for tracking num of resps)
     wordsTrainingList = list of all filteredWords lists
     ignoreWordsList = list of common, neutral words that are most likely                         accompanied by polarized words (I don't want too many                      neutral words to overload an actually polarized                            statement.)
     text = sample response string from a tuple in allResps
@@ -89,7 +91,29 @@ def initClassifier(allResps, ignoreWordsList):
     filteredWords = []
     sentimentTrainingList = []
     wordsTrainingList = []
+    ignoreWordsList = [  # must be lowercase and w/o punctuation
+        "feel", "need", "want", "and", "the", "then", "day", "night", "had", "have", "make", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "much", "many", "someone", "something"
+    ]
 
+    # # from moodTrackerAttemptToFixFromFreqDist:
+    # for i in range(len(allResps)):
+    #     filteredWords = []
+    #     text = allResps[i][0]  # it throws tuple error if I don't make new var
+    #     textWordsList = text.split()
+    #     sentiment = allResps[i][1]
+    #     for word in textWordsList:
+    #         if len(word) >= 3 and (word not in ignoreWordsList) and \
+    #                 word != "@" and word[0:4] != "http":
+    #             word = word.translate(
+    #                 str.maketrans('', '', string.punctuation))
+    #             filteredWords.append(word)
+    #     resps.append((filteredWords, sentiment))
+    #     sentimentTrainingList.append(sentiment)
+    #     wordsTrainingList.append((filteredWords))
+    # sortedWords = getWordFeatures(getRespsWords(resps))
+    # # print(sortedWords)
+
+    # from earliest undo:
     # filter and organize words from sample data:
     for i in range(len(allResps)):
         filteredWords = []
@@ -97,7 +121,12 @@ def initClassifier(allResps, ignoreWordsList):
         text = allResps[i][0]  # throws tuple error if I don't make new var
         textWordsList = text.split()
 
-        # remove usernames:
+        # # remove usernames incorrectly:
+        # for word in textWordsList:
+        #     if word[0] == "@":
+        #         textWordsList.remove(word)
+
+        # remove usernames correctly (similar results correctly/incorrectly):
         wordsToRemove = []
         for word in textWordsList:
             if word[0] == "@":
@@ -133,7 +162,7 @@ def initClassifier(allResps, ignoreWordsList):
     return sortedWords, classifier
 
 
-def classifyResp(sortedWords, classifier, userResp, ignoreWordsList):
+def classifyResp(sortedWords, classifier, userResp):
     """
     This function removes punctuation (except from the user's response, classifies the overall sentiment of the user's response, prints it, and returns the dictionary of the mood data in the form {resp, mood}.
 
@@ -151,16 +180,12 @@ def classifyResp(sortedWords, classifier, userResp, ignoreWordsList):
     userRespEdited = userResp.translate(
         str.maketrans('', '', string.punctuation)
     )
-
-    # remove short/unhelpful words:
     userRespEdited = userRespEdited.split()
-    wordsToRemove = []
     for word in userRespEdited:
-        if len(word) < 3 or word in ignoreWordsList:
-            wordsToRemove.append(word)
-    userRespEdited = [el for el in userRespEdited if el not in wordsToRemove]
+        if len(word) < 3:
+            # remove first (not all) matching value
+            userRespEdited.remove(word)
 
-    print(userRespEdited)
     extractedFeatures = extractFeatures(sortedWords, userRespEdited)
 
     mood = classifier.classify(extractedFeatures)
@@ -228,7 +253,7 @@ def storeMood(entry):
     """
     The function adds dictionaries in the form {resp: mood} to the json file.
 
-    entry = new user entry 
+    entry = new user entry
     dataFile = read file of json mood data
     moodData = updated json mood data to store
     oldMoodData = json mood data (user entries) stored
@@ -263,48 +288,19 @@ def graphSentiments():
 
     Note: no parameters, so no doctest
     """
-    # # old, not edited since originally worked:
-    # with open("moodTrackerData.json", "r+") as dataFile:
-    #     entries = json.load(dataFile)
-    #     entriesCount = [entry for entry in range(len(entries))]
-    #     sentimentList = [mood for mood in entries.values()]
-    # subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in figure
-    # subplot.plot(entriesCount, sentimentList)  # x, y, marker
-    # subplot.set_yticklabels(["negative", "neutral", "positive"])  # order ticks
-    # # the x-ticks seem okay if you have at least 5 entries
-    # plt.ylabel('Sentiment')
-    # plt.xlabel('Entry Number')
-    # plt.title('Sentiment vs Entry Number Graph')
-    # plt.show()
-
-    # new; the tick labels don't line up with the actual coordinates:
+    dataFile = open("moodTrackerData.json", "r+")
     try:
-        with open("moodTrackerData.json", "r+") as dataFile:
-            entries = json.load(dataFile)
-            entriesCount = [entry for entry in range(len(entries))]
-            sentimentList = [mood for mood in entries.values()]
-        # subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in fig
-        # subplot.plot(entriesCount, sentimentList)  # x, y, marker
-        # subplot.set_yticklabels(["negative", "neutral", "positive"])
-        # subplot.set_xticklabels(entriesCount)
-        # plt.ylabel('Sentiment')
-        # plt.xlabel('Entry Number')
-        # plt.title('Sentiment vs Entry Number Graph')
-
-        fig, ax = plt.subplots()
-        xTicksList = []
-        for i in range(1, len(entriesCount)+1):  # shift over 1
-            xTicksList.append(i)
-        graphLine = plt.plot(xTicksList, sentimentList, 'b-')
+        entries = json.load(dataFile)
+        entriesCount = [entry for entry in range(len(entries))]
+        sentimentList = [mood for mood in entries.values()]
+        dataFile.close()
+        subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in fig
+        subplot.plot(entriesCount, sentimentList)  # x, y, marker
+        subplot.set_yticklabels(["negative", "neutral", "positive"])
         plt.ylabel('Sentiment')
         plt.xlabel('Entry Number')
         plt.title('Sentiment vs Entry Number Graph')
-        # plt.axis([1, entriesCount, 0, 3])  # Value Error
-        ax.set_xticks(xTicksList)
-        ax.set_yticks(["negative", "neutral", "positive"])
-
         plt.show()
-
     except json.decoder.JSONDecodeError:
         print("Sorry. There's not enough data to graph. Make a new entry first.")
 
@@ -316,7 +312,6 @@ def deleteEntries():
     Note: no parameters, so no doctest
     """
     open("moodTrackerData.json", "w").close()
-    print("You have deleted all of your entries.")
 
 
 def main():
@@ -331,17 +326,13 @@ def main():
 
     Note: no parameters, so no doctest
     """
-    ignoreWordsList = [  # must be lowercase and w/o punctuation
-        "feel", "need", "want", "and", "then", "day", "night", "had", "has", "have", "make", "makes", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "really", "much", "many", "someone", "something"
-    ]
-
     yesList = [
         'yes', 'yeah', 'sure', 'okay', 'ok', 'why not', 'yeet', 'yep', 'yup', 'si', 'affirmative', 'of course', 'always'
     ]
     repeat = 'yes'
     print("Please wait while the sentiment classifier initializes.")
     allResps = getRespData()
-    sortedWords, classifier = initClassifier(allResps, ignoreWordsList)
+    sortedWords, classifier = initClassifier(allResps)
 
     while repeat == "yes":
         userResp = input(
@@ -350,14 +341,11 @@ def main():
             "to delete all of your entries, type 'delete',\n"
             "or to exit the program, type 'quit'.\n"
         ).strip().lower()
-        # userResp = "entry"  # debugging
         if userResp == "entry":
             userResp = input(
                 "\nPlease describe your day and how you feel about it.\n"
             ).lower()
-            storeMood(classifyResp(
-                sortedWords, classifier, userResp, ignoreWordsList
-            ))
+            storeMood(classifyResp(sortedWords, classifier, userResp))
             repeat = input(
                 "\nDo you want to do another action?\n"
             ).lower()

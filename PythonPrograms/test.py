@@ -179,9 +179,16 @@ def testRemovePunc():
     # print(posResps1)
     # print(posResps2)  # idk why but the second one doesn't work
 
+def testSetIntersection():
+    a = ["mail1", "mail2", "mail3", "mail4"]
+    b = ["mail6", "mail5"]
+    if (set(a) & set(b)):
+        print(True)
+    else:
+        print(False)
 
 def main():
-    testRemovePunc()
+    testSetIntersection()
 
 
 if __name__ == "__main__":
