@@ -29,7 +29,6 @@ def getRespData():
     """
 
     posResps = []
-    # consider removing neutral option because it's overpowering others
     neutResps = []
     negResps = []
     files = [
@@ -42,16 +41,15 @@ def getRespData():
         # # crashes the program b/c it's too much data or takes too long to load; "MemoryError  Exception: No Description": https://www.kaggle.com/crowdflower/twitter-airline-sentiment/version/2
         # "airlineTweets2.csv"
     ]
-    for i in range(20):  # adds custom data many times to outweigh other data
+    # + custom data 20 times to outweigh specific words' tone in other files:
+    for i in range(20):
         files.append("customData.csv")
 
     for i in range(len(files)):
         with open(files[i], "r", encoding="utf8") as dataFile:
-            # w/o this encoding some characters are undefined
+            # w/o utf8 encoding some characters, are undefined
             for line in dataFile:
-                # strip \n, convert to list of str, split at 1st comma:
                 line = line.strip().split(",", 1)
-                # There are a bunch of lines in the data file that are a portion of a string that got moved to a new line and it would take too long to find and remove all of them:
                 try:
                     text = line[1].strip('"').lower()
                     if line[0] == '4':
@@ -65,7 +63,6 @@ def getRespData():
         dataFile.close()
 
     allResps = posResps + neutResps + negResps
-    # print(f"{negResps[230:]}")  # if list too long to show: it'll cut off end
     return allResps
 
 
@@ -184,7 +181,6 @@ def classifyResp(sortedWords, classifier, userResp, ignoreWordsList):
             wordsToRemove.append(word)
     userRespEdited = [el for el in userRespEdited if el not in wordsToRemove]
 
-    print(userRespEdited)
     extractedFeatures = extractFeatures(sortedWords, userRespEdited)
 
     mood = classifier.classify(extractedFeatures)
@@ -207,7 +203,6 @@ def getRespsWords(resps):
     """
     sigWords = []
     for (words, sentiment) in resps:
-        # extend() adds each individual element, not whole list
         sigWords.extend(words)
     return sigWords
 
@@ -226,7 +221,6 @@ def getWordFeatures(sigWords):
     ['like', 'pie', 'sky']
     """
     sortedWords = []
-    # wouldn't maintain sorted order from nltk.DistFreq when talking .keys(); Counter is my alternative:
     sigWordsAndFreq = Counter(sigWords).most_common()
     for (word, freq) in sigWordsAndFreq:
         sortedWords.append(word)
@@ -276,6 +270,9 @@ def respond(userRespWords, mood):
     """
 
     sleepTipKW = ["sleepy", "sleep", "drowsy"]
+    selfCareKW = ["holiday", "vacation", "relax", "party", "festival"]
+    sickKW = ["sick", "illness", "unwell", "sickness", "fever"]
+
     if mood == "negative" and (set(userRespWords) & set(sleepTipKW)):
         print(
             "The average adult needs to sleep for 7-9 hours. "
@@ -286,21 +283,25 @@ def respond(userRespWords, mood):
             "\nYou can also flex all of your muscles, starting at your feet and gradually working your way up to your head, "
             "then gradually relax them, again, starting from your feet and working your way up to your head."
         )
-
-    selfCareKW = ["holiday", "vacation", "relax", "party", "festival"]
-    if mood == "positive" and (set(userRespWords) & set(selfCareKW)):
+    elif mood == "positive" and (set(userRespWords) & set(selfCareKW)):
         print(
             "Yay! Life is too short to not enjoy yourself. "
             "Always remember that you ARE worth it."
         )
-
-    sickKW = ["sick", "illness", "unwell", "sickness", "fever"]
-    if mood == "negative" and (set(userRespWords) & set(sickKW)):
+    elif mood == "negative" and (set(userRespWords) & set(sickKW)):
         print(
             "If you need to take a sick day tomorrow to rest, don't be afraid to do it. "
             "It will keep the sickness from spreading to others and will allow your body to fight it, so it's a win-win. "
             "\nAnd if you worry that you are seriously ill, then visit the doctor, rather than trying to diagnose and treat yourself."
         )
+    elif mood == "negative":
+        print(
+            "Your struggles and pain are valid. "
+            "Nevertheless, choose to believe that that you will get through this and make the future brighter. "
+            "Choose positivity and gratitude simply because it feels better."
+        )
+    elif mood == "positive":
+        print("Yay! Happy days are the best days!")
 
 
 def storeMood(entry):
@@ -318,14 +319,11 @@ def storeMood(entry):
     Note: nothing is printed because it just writes to a file, so no doctest
     """
     with open("moodTrackerData.json", "r+") as dataFile:
-        # if os.stat("moodTrackerData.json").st_size == 0:  # file empty
         if os.path.getsize("moodTrackerData.json") == 0:  # file empty
             moodData = entry
         else:  # file occupied
-            # throws docoder error if file empty
             oldMoodData = json.load(dataFile)
             moodData = {**oldMoodData, **entry}  # consolidates duplicate pairs
-        # (you can't open the same file w/ w within with statement code block)
         dataFile.seek(0)
         dataFile.truncate()
         dataFile.write(json.dumps(moodData))
@@ -456,7 +454,6 @@ def main():
             "to delete all of your entries, type 'delete',\n"
             "or to exit the program, type 'quit'.\n"
         ).strip().lower()
-        # userResp = "entry"  # debugging
         if userResp == "entry":
             userResp = input(
                 "\nPlease describe your day and how you feel about it."
