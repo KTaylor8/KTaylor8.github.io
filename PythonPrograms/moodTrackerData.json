@@ -1,8 +1,1 @@
-{
-  "i'm upset": "negative",
-  "i stubbed my toe": "neutral",
-  "i'm angry": "negative",
-  "i'm happy my program is somewhat functional": "positive",
-  "second entry": "neutral",
-  "i'm tired": "negative"
-}
+{"i ate some yummy cake": "positive", "i had a horrible day. i fell ill": "negative", "i feel a little ill, kinda bad": "negative", "i won the lottery!": "positive", "i ate cheese": "neutral"}

@@ -2,43 +2,33 @@ import nltk  # natural language toolkit
 import json
 import os
 from matplotlib import pyplot as plt
-from matplotlib import axes as axes
 import string
 from collections import Counter
 import numpy as np
-# it thinks everything is positive with only the custom data and it thinks sad and bad are neutral unless they're together (very similar to moodTracker.py); don't forget to add the dataHub data back in
 
 
 def getRespData():
     """
-    The function prepares lists of text string and sentiment data tuples from multiple csv files of data (mostly imported) to improve the accuracy of the program's sentiment classifications.
-
-    posResps = list of tuples (text string, "positive")
-
-    neutResps = list of tuples (text string, "neutral")
-
-    negResps = list of tuples (text string, "negative")
+    The function sorts the lines of training strings from multiple csv files of data (mostly imported) into different lists based on their sentiment (4 is positive, 2 is neutral, 0 is negative) to improve the accuracy of the program's sentiment predictions.
 
     allResps = complete list of (response, sentiment) tuples from sample data
 
     files = list of file names from which I import string-sentiment data
 
-    dataFile = current file with data being imported
-
     text = the polarized text from a line in the data file
+
+    dataFile = current file with data being imported
 
     Note: no parameters, so no doctest
     """
 
-    posResps = []
-    neutResps = []
-    negResps = []
+    allResps = []
     files = [
         # http://help.sentiment140.com/for-students
         "stanfordSentiment140TweetData.csv",
 
-        # # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
-        # "dataHubTweetsFull.csv",
+        # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
+        "dataHubTweetsFull.csv",
 
         # # crashes the program b/c it's too much data or takes too long to load; "MemoryError  Exception: No Description": https://www.kaggle.com/crowdflower/twitter-airline-sentiment/version/2
         # "airlineTweets2.csv"
@@ -55,16 +45,15 @@ def getRespData():
                 try:
                     text = line[1].strip('"').lower()
                     if line[0] == '4':
-                        posResps.append((text, "positive"))
+                        allResps.append((text, "positive"))
                     elif line[0] == '2':
-                        neutResps.append((text, "neutral"))
+                        allResps.append((text, "neutral"))
                     elif line[0] == '0':
-                        negResps.append((text, "negative"))
+                        allResps.append((text, "negative"))
                 except IndexError:
                     pass
         dataFile.close()
 
-    allResps = posResps + neutResps + negResps
     return allResps
 
 
@@ -357,6 +346,8 @@ def graphSentiments():
             entries = json.load(dataFile)
             entriesCount = [entry for entry in range(1, len(entries)+1)]
             sentimentList = [mood for mood in entries.values()]
+            if len(entriesCount) == 1:  # graph would just be a dot, not useful
+                raise ValueError
 
         plt.plot(entriesCount, sentimentList, 'bo-')  # x, y, marker
         plt.yticks(sentimentList, sentimentList)
@@ -366,7 +357,7 @@ def graphSentiments():
         plt.title('Sentiment vs Entry Number Graph')
         plt.show()
 
-    except json.decoder.JSONDecodeError:
+    except (json.decoder.JSONDecodeError, ValueError) as e:
         print(
             "Sorry. There's not enough data to graph. Make a new entry first."
         )
@@ -401,7 +392,7 @@ def main():
     Note: no parameters, so no doctest
     """
     ignoreWordsList = [  # must be lowercase and w/o punctuation
-        "feel", "need", "want", "and", "then", "day", "night", "had", "has", "have", "make", "makes", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "them", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "really", "much", "many", "someone", "something", "since", "because", "which", "there", "did", "more", "less"
+        "feel", "need", "want", "and", "then", "day", "night", "had", "has", "have", "make", "makes", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "them", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "really", "much", "many", "someone", "something", "since", "because", "which", "there", "did", "more", "less", "ate", "eat", "drink", "drank"
     ]
 
     yesList = [
@@ -415,7 +406,6 @@ def main():
     allResps = getRespData()
     sortedWords, classifier = initClassifier(allResps, ignoreWordsList)
 
-    graphSentiments()  # debugging
     while repeat == "yes":
         userResp = input(
             "\nTo make a new entry, type 'entry',\n"
@@ -426,8 +416,9 @@ def main():
         if userResp == "entry":
             userResp = input(
                 "\nPlease describe your day and how you feel about it."
-                "\n(Stick to one general tone in your entry, please, or "
-                "this version of the mood tracker will get confused)\n"
+                "\nStick to one general tone in your entry, please, or "
+                "this version of the mood tracker will get confused. "
+                "\nAlso, the mood tracker does not understand sarcasm.\n"
             ).lower()
             storeMood(classifyResp(
                 sortedWords, classifier, userResp, ignoreWordsList
