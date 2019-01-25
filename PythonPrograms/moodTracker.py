@@ -12,11 +12,17 @@ def getRespData():
     The function prepares lists of text string and sentiment data tuples from multiple csv files of data (mostly imported) to improve the accuracy of the program's sentiment classifications.
 
     posResps = list of tuples (text string, "positive")
+
     neutResps = list of tuples (text string, "neutral")
+
     negResps = list of tuples (text string, "negative")
+
     allResps = complete list of (response, sentiment) tuples from sample data
+
     files = list of file names from which I import string-sentiment data
+
     dataFile = current file with data being imported
+
     text = the polarized text from a line in the data file
 
     Note: no parameters, so no doctest
@@ -30,8 +36,8 @@ def getRespData():
         # http://help.sentiment140.com/for-students
         "stanfordSentiment140TweetData.csv",
 
-        # # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
-        # "dataHubTweetsFull.csv",
+        # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
+        "dataHubTweetsFull.csv",
 
         # # crashes the program b/c it's too much data or takes too long to load; "MemoryError  Exception: No Description": https://www.kaggle.com/crowdflower/twitter-airline-sentiment/version/2
         # "airlineTweets2.csv"
@@ -68,19 +74,30 @@ def initClassifier(allResps, ignoreWordsList):
     The function first matches the filtered possibly polar words (with punctuation removed) to their sentiment, then it prepares the sentiment classifier based on the training response examples to determine if a new given text response is overall positive, neutral or negative in tone.
 
     allResps = complete list of (response, sentiment) tuples from sample data
-    filteredWords = changing list of words from a string that are filtered to 
-                    be useful (at least three characters long, not int the ignoreWordsList not a username (@), and not a url)
+
+    filteredWords = changing list of words from a string that are filtered to be useful (at least three characters long, not int the ignoreWordsList not a username (@), and not a url)
+
     resps = list of (list of individual polar words, sentiment) tuples
+
     sortedWords = list of filtered words ordered by decreasing frequency
-    sentimentTrainingList = list of every sentiment (for tracking num of                               responses)
+
+    sentimentTrainingList = list of every sentiment (for tracking num of responses)
+
     wordsTrainingList = list of all filteredWords lists
-    ignoreWordsList = list of common, neutral words that are most likely                         accompanied by polarized words (I don't want too many                      neutral words to overload an actually polarized                            statement.)
+
+    ignoreWordsList = list of common, neutral (or very context dependent) words that are most likely accompanied by polarized words (I don't want too many neutral words to overload an actually polarized statement.)
+
     text = sample response string from a tuple in allResps
+
     textWordsList = text split into individual words in a list
+
     sentiment = sample sentiment string from a tuple in allResps
+
     word = current word (element) in a list of words from textWordsList
-    trainingData = list of labeled feature sets [a list of tuples ({dict of                   each resp's extracted features}, resp sentiment string)]
-    classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
+
+    trainingData = list of labeled feature sets [a list of tuples ({dict of each resp's extracted features}, resp sentiment string)]
+
+    classifier = object that maps each feature to the probability of it having a positive or negative sentiment
 
     Note: not doing a doc test run because I'm not sure how to make the classifier return a value in the right format without it being super long
     """
@@ -138,10 +155,17 @@ def classifyResp(sortedWords, classifier, userResp, ignoreWordsList):
     This function removes punctuation (except from the user's response, classifies the overall sentiment of the user's response, prints it, and returns the dictionary of the mood data in the form {resp, mood}.
 
     sortedWords = list of filtered words ordered by decreasing freq
+
     userResp = user's response about their day and feelings
-    extractedFeatures = dict with booleons for whether or not a sorted word is                     in the user's response
-    classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
+
+    ignoreWordsList = list of common, neutral (or very context dependent) words that are most likely accompanied by polarized words (I don't want too many neutral words to overload an actually polarized statement.)
+
+    extractedFeatures = dict with booleons for whether or not a sorted word is in the user's response
+
+    classifier = object that maps each feature to the probability of it having a positive or negative sentiment
+
     mood = classified sentiment for user response
+
     moodDataDict = dict of user response string and mood string
 
     Note: not doing a doc test run because I'm not sure how to make the classifier argument in the right format without it being super long
@@ -164,8 +188,8 @@ def classifyResp(sortedWords, classifier, userResp, ignoreWordsList):
     extractedFeatures = extractFeatures(sortedWords, userRespEdited)
 
     mood = classifier.classify(extractedFeatures)
-    print(f'Your response was overall {mood}.')
-    makeSuggestions(userRespEdited, mood)
+    print(f'\nYour response was overall {mood}.')
+    respond(userRespEdited, mood)
     moodDataDict = {userResp: mood}
     return moodDataDict
 
@@ -175,6 +199,7 @@ def getRespsWords(resps):
     The function separates a list in the paired form [(filtered words), sentiment] into a list of the filtered words only.
 
     resps = full list of (list of polar words in a string, sentiment)
+
     sigWords = list of all individual filtered words from resps
 
     >>> getRespsWords([(['love', 'best', 'friend'], 'positive')])
@@ -192,7 +217,9 @@ def getWordFeatures(sigWords):
     The function reorders the list of filtered words by decreasing frequency.
 
     sigWords = list of all filtered individual words from the string
+
     sigWordsAndFreq = list of tuples in the form (filtered word, frequency)
+
     sortedWords = list of filtered words ordered by decreasing frequency
 
     >>> getWordFeatures(['sky', 'like', 'pie', 'like', 'like', 'pie'])
@@ -211,7 +238,9 @@ def extractFeatures(sortedWords, words):
     The function is a feature extractor that compares words in response to words in list of possible words so unused words can be ignored and response can be tested against the training data.
 
     sortedWords = dict keys list of filtered words ordered by decreasing freq
+
     words = all (filtered) response words split individually into a list
+
     features = dictionary of {'contains(polar word)': boolean whether or not user input string contains polar word}
 
     >>> extractFeatures(['like', 'pie', 'fly', 'sky'], ['I', 'like', 'pie'])
@@ -225,23 +254,29 @@ def extractFeatures(sortedWords, words):
     return features
 
 
-def makeSuggestions(userRespWords, mood):
+def respond(userRespWords, mood):
     """
-    The function searches for key words in the user's response in order to provide helpful suggestions in response to the user's entry.
+    The function searches for key words in the user's response in order to provide a response to the user's entry  that is helpful for certain situations.
 
     userRespWords = list of useful individual words filtered from user response
-    mood = predicted sentiment of userResp
-    sleepTipKeyWords = list of key words to trigger sleep tips
 
-    >>> makeSuggestions(["tired","not","sleep"], "negative")
+    mood = predicted sentiment of 
+
+    sleepTipKW = list of key words to trigger sleep tips
+
+    selfCareKW = list of key words to trigger affirmation of a positive experience
+
+    sickKW = list of key words to trigger suggestions regarding sickness
+
+    >>> respond(["tired","not","sleep"], "negative")
     The average adult needs to sleep for 7-9 hours. If you find yourself laying awake at night, there are several things you can do to help you sleep.
     Eat foods with melatonin around bedtime, such as cherries.
     To relax, you can try the 4-7-8 breathing technique: breathe in for 4 seconds, hold your breath for 7 seconds, and breathe out for 8 seconds.
     You can also flex all of your muscles, starting at your feet and gradually working your way up to your head, then gradually relax them, again, starting from your feet and working your way up to your head.
     """
 
-    sleepTipKeyWords = ["sleepy", "sleep", "drowsy"]
-    if mood == "negative" and (set(userRespWords) & set(sleepTipKeyWords)):
+    sleepTipKW = ["sleepy", "sleep", "drowsy"]
+    if mood == "negative" and (set(userRespWords) & set(sleepTipKW)):
         print(
             "The average adult needs to sleep for 7-9 hours. "
             "If you find yourself laying awake at night, there are several things you can do to help you sleep."
@@ -252,10 +287,19 @@ def makeSuggestions(userRespWords, mood):
             "then gradually relax them, again, starting from your feet and working your way up to your head."
         )
 
-    sleepTipKeyWords = ["sleepy", "sleep", "drowsy"]
-    if mood == "negative" and (set(userRespWords) & set(sleepTipKeyWords)):
+    selfCareKW = ["holiday", "vacation", "relax", "party", "festival"]
+    if mood == "positive" and (set(userRespWords) & set(selfCareKW)):
         print(
+            "Yay! Life is too short to not enjoy yourself. "
+            "Always remember that you ARE worth it."
+        )
 
+    sickKW = ["sick", "illness", "unwell", "sickness", "fever"]
+    if mood == "negative" and (set(userRespWords) & set(sickKW)):
+        print(
+            "If you need to take a sick day tomorrow to rest, don't be afraid to do it. "
+            "It will keep the sickness from spreading to others and will allow your body to fight it, so it's a win-win. "
+            "\nAnd if you worry that you are seriously ill, then visit the doctor, rather than trying to diagnose and treat yourself."
         )
 
 
@@ -264,8 +308,11 @@ def storeMood(entry):
     The function adds dictionaries in the form {resp: mood} to the json file.
 
     entry = new user entry 
+
     dataFile = read file of json mood data
+
     moodData = updated json mood data to store
+
     oldMoodData = json mood data (user entries) stored
 
     Note: nothing is printed because it just writes to a file, so no doctest
@@ -289,11 +336,17 @@ def graphSentiments():
     The function graphs sentiment of entries (negatuve, neutral, or positive) vs entry number so that the user can see the general trend of their mood.
 
     dataFile = read file of json mood data
+
     entries = user entries stored (dictionary)
+
     entriesCount = list of number of entries (used for x-axis tick labels)
+
     entry = each entry in the dictionary of entries
+
     sentimentList = list of sentiments (used for y-axis tick labels)
+
     mood = values in dictionary of entries
+
     subplot = graph created (plot as part of new figure)
 
     Note: no parameters, so no doctest
@@ -367,23 +420,32 @@ def main():
     """
     The function serves as the program's main menus and loops in asking the user to chose between a variety of actions (make a new entry, graph your mood data, delete all entries, or quit the program) and calling the function for that functionality until the user quits.
 
+    ignoreWordsList = list of common, neutral (or very context dependent) words that are most likely accompanied by polarized words (I don't want too many neutral words to overload an actually polarized statement.)
+
+    yesList = list of possible responses to the repeat program question used to determine whther the user wants to perform further actions
+
     repeat = whether the user wants to repeat the program or not
+
     userResp = user's response about their day
+
     sortedWords = list of filtered words ordered by decreasing frequency
-    classifier = object that maps each feature to the probability of it having              a positive or negative sentiment
-    yesList = list of possible responses to the repeat program question used             to determine whther the user wants to perform further actions
+
+    classifier = object that maps each feature to the probability of it having a positive or negative sentiment
 
     Note: no parameters, so no doctest
     """
     ignoreWordsList = [  # must be lowercase and w/o punctuation
-        "feel", "need", "want", "and", "then", "day", "night", "had", "has", "have", "make", "makes", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "them", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "really", "much", "many", "someone", "something", "since", "because", "which", "there", "did"
+        "feel", "need", "want", "and", "then", "day", "night", "had", "has", "have", "make", "makes", "made", "was", "are", "were", "will", "afternoon", "evening", "morning", "get", "got", "receive", "received", "the", "went", "its", "his", "her", "their", "our", "they", "them", "this", "that", "im", "mr", "mrs", "ms", "for", "you", "with", "only", "essentially", "basically", "from", "but", "just", "also", "too", "out", "today", "tonight", "tomorrow", "about", "around", "watch", "watched", "see", "saw", "hear", "heard", "now", "currently", "all", "what", "who", "where", "when", "how", "why", "some", "lots", "very", "really", "much", "many", "someone", "something", "since", "because", "which", "there", "did", "more", "less"
     ]
 
     yesList = [
         'yes', 'yeah', 'sure', 'okay', 'ok', 'why not', 'yeet', 'yep', 'yup', 'si', 'affirmative', 'of course', 'always'
     ]
     repeat = 'yes'
-    print("Please wait while the sentiment classifier initializes.")
+    print(
+        "Welcome to Katie's Mood Tracker!\n"
+        "Please wait while the sentiment classifier initializes."
+    )
     allResps = getRespData()
     sortedWords, classifier = initClassifier(allResps, ignoreWordsList)
 
@@ -397,7 +459,9 @@ def main():
         # userResp = "entry"  # debugging
         if userResp == "entry":
             userResp = input(
-                "\nPlease describe your day and how you feel about it.\n"
+                "\nPlease describe your day and how you feel about it."
+                "\n(Stick to one general tone in your entry, please, or "
+                "this version of the mood tracker will get confused)\n"
             ).lower()
             storeMood(classifyResp(
                 sortedWords, classifier, userResp, ignoreWordsList
