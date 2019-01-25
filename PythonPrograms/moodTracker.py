@@ -2,8 +2,10 @@ import nltk  # natural language toolkit
 import json
 import os
 from matplotlib import pyplot as plt
+from matplotlib import axes as axes
 import string
 from collections import Counter
+import numpy as np
 # it thinks everything is positive with only the custom data and it thinks sad and bad are neutral unless they're together (very similar to moodTracker.py); don't forget to add the dataHub data back in
 
 
@@ -35,8 +37,8 @@ def getRespData():
         # http://help.sentiment140.com/for-students
         "stanfordSentiment140TweetData.csv",
 
-        # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
-        "dataHubTweetsFull.csv",
+        # # https://old.datahub.io/dataset/twitter-sentiment-analysis/resource/091d6b4b-22e9-4a64-85c4-bdc8028183ac
+        # "dataHubTweetsFull.csv",
 
         # # crashes the program b/c it's too much data or takes too long to load; "MemoryError  Exception: No Description": https://www.kaggle.com/crowdflower/twitter-airline-sentiment/version/2
         # "airlineTweets2.csv"
@@ -350,58 +352,24 @@ def graphSentiments():
     Note: no parameters, so no doctest
     """
 
-    # # older, y-ticks stay in right order but there are twice as many coodinates as x-ticks; none are showing as neutral:
-    # with open("moodTrackerData.json", "r+") as dataFile:
-    #     entries = json.load(dataFile)
-    #     entriesCount = [entry for entry in range(len(entries))]
-    #     sentimentList = [mood for mood in entries.values()]
-    # subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in figure
-    # subplot.plot(entriesCount, sentimentList)  # x, y, marker
-    # xTicksList = []
-    # for i in range(1, len(entriesCount)+1):  # shift over 1
-    #     xTicksList.append(i)
-    # # there are twice as many coodinates as x-ticks and starts at 2
-    # subplot.set_xticklabels(xTicksList)
-    # # there are twice as many coodinates as x-ticks:
-    # # subplot.set_xticklabels(entriesCount)
-    # subplot.set_yticklabels(["negative", "neutral", "positive"])  # order ticks
-    # # the x-ticks seem okay without being set if you have at least 5 entries
-    # plt.ylabel('Sentiment')
-    # plt.xlabel('Entry Number')
-    # plt.title('Sentiment vs Entry Number Graph')
-    # plt.show()
-
-    # new; the xtick labels are all there, but there are still no middle-values showing, and the y-ticks change order based on the results graphed and neutral is at the top:
     try:
         with open("moodTrackerData.json", "r+") as dataFile:
             entries = json.load(dataFile)
-            entriesCount = [entry for entry in range(len(entries))]
+            entriesCount = [entry for entry in range(1, len(entries)+1)]
             sentimentList = [mood for mood in entries.values()]
-        # subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in fig
-        # subplot.plot(entriesCount, sentimentList)  # x, y, marker
-        # subplot.set_yticklabels(["negative", "neutral", "positive"])
-        # subplot.set_xticklabels(entriesCount)
-        # plt.ylabel('Sentiment')
-        # plt.xlabel('Entry Number')
-        # plt.title('Sentiment vs Entry Number Graph')
 
-        fig, ax = plt.subplots()
-        # needs to be after subplots in order to work
-        graphLine = plt.plot(entriesCount, sentimentList, 'b-')
+        plt.plot(entriesCount, sentimentList, 'bo-')  # x, y, marker
+        plt.yticks(sentimentList, sentimentList)
+        plt.xticks(np.arange(min(entriesCount), max(entriesCount)+1, 1.0))
         plt.ylabel('Sentiment')
         plt.xlabel('Entry Number')
         plt.title('Sentiment vs Entry Number Graph')
-        # plt.axis([1, entriesCount, 0, 3])  # Value Error
-        # xTicksList = []
-        # for i in range(1, len(entriesCount)+1):  # shift over 1
-        #     xTicksList.append(i)  # coordinate domain shorter than ticks
-        ax.set_xticks(entriesCount)
-        ax.set_yticks(["negative", "neutral", "positive"])
-
         plt.show()
 
     except json.decoder.JSONDecodeError:
-        print("Sorry. There's not enough data to graph. Make a new entry first.")
+        print(
+            "Sorry. There's not enough data to graph. Make a new entry first."
+        )
 
 
 def deleteEntries():
@@ -447,6 +415,7 @@ def main():
     allResps = getRespData()
     sortedWords, classifier = initClassifier(allResps, ignoreWordsList)
 
+    graphSentiments()  # debugging
     while repeat == "yes":
         userResp = input(
             "\nTo make a new entry, type 'entry',\n"

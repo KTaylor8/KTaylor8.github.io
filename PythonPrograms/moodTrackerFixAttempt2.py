@@ -301,6 +301,51 @@ def graphSentiments():
         plt.xlabel('Entry Number')
         plt.title('Sentiment vs Entry Number Graph')
         plt.show()
+
+        # # older, y-ticks stay in right order but there are twice as many coodinates as x-ticks; none are showing as neutral:
+        # with open("moodTrackerData.json", "r+") as dataFile:
+        #     entries = json.load(dataFile)
+        #     entriesCount = [entry for entry in range(len(entries))]
+        #     sentimentList = [mood for mood in entries.values()]
+        # subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 (sub)plot in figure
+        # subplot.plot(entriesCount, sentimentList)  # x, y, marker
+        # xTicksList = []
+        # for i in range(1, len(entriesCount)+1):  # shift over 1
+        #     xTicksList.append(i)
+        # # there are twice as many coodinates as x-ticks and starts at 2
+        # subplot.set_xticklabels(xTicksList)
+        # # there are twice as many coodinates as x-ticks:
+        # # subplot.set_xticklabels(entriesCount)
+        # subplot.set_yticklabels(["negative", "neutral", "positive"])  # order ticks
+        # # the x-ticks seem okay without being set if you have at least 5 entries
+        # plt.ylabel('Sentiment')
+        # plt.xlabel('Entry Number')
+        # plt.title('Sentiment vs Entry Number Graph')
+        # plt.show()
+
+        # # new (w/ entriesCount starting @ 1); including every single tick is less convenient for many entries but works well w/ small number of data to graph; barely any register as the middle value; the xtick labels are all there, but there are still no middle-values showing, and the y-ticks change order based on the results graphed and neutral is at the top:
+        # fig, ax = plt.subplots()
+        # # needs to be after subplots in order to work:
+        # graphLine = plt.plot(entriesCount, sentimentList, 'b^')
+        # plt.ylabel('Sentiment')
+        # plt.xlabel('Entry Number')
+        # plt.title('Sentiment vs Entry Number Graph')
+        # ax.set_xticks(entriesCount)
+        # ax.set_yticks(["negative", "neutral", "positive"])
+
+        # # other new with similar problems:
+        # subplot = plt.figure().add_subplot(111)  # 1x1 grid, 1 subplot in fig
+        # plt.xticks(entriesCount, entriesCount) # good but mixed order of y-ticks
+        # subplot.plot(entriesCount, sentimentList, 'b')  # x, y, marker
+        # subplot.set_yticklabels(
+        #     ["negative", "neutral", "positive"])
+        # if len(entriesCount) < 6:  # defaults to floats, not ints
+        #     subplot.set_xticklabels(entriesCount)
+        # plt.ylabel('Sentiment')
+        # plt.xlabel('Entry Number')
+        # plt.title('Sentiment vs Entry Number Graph')
+
+        plt.show()
     except json.decoder.JSONDecodeError:
         print("Sorry. There's not enough data to graph. Make a new entry first.")
 
