@@ -1,6 +1,7 @@
 //window.onload makes the initial things happen only after the page is loaded
 var postsAvailable = 3;
-var post1Filled = false;
+var postNum = 0;
+var post1Filled = false; //you can only make one post for now, maybe look into classes to add more posts?
 
 window.onload = function () {
   //setting the post boxes and likes/dislikes as hidden
