@@ -24,13 +24,6 @@ body {
   background-image: url(images/plaid.jpg);
 }
 
-#PostTitle {
-  padding-right: 65px;
-  color: purple;
-  font-size: 25px;
-  font-family: "Abril Fatface";
-}
-
 #forumTitle {
   text-align: center;
   font-family: "Abril Fatface";
@@ -75,6 +68,28 @@ body {
   float: left;
 }
 
+.usernames {
+  padding-bottom: 30px;
+  font-size: 40px;
+  padding-left: 20px;
+  margin-left: -40px;
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 180px;
+  /* padding: 60px 0 0; */
+  border: none;
+  /* font: normal 40px/0.65 "Squada One", Helvetica, sans-serif; */
+  font-family: "Concert One", cursive;
+  color: black;
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  text-shadow: 8px 5px 0 rgba(188, 188, 188, 1);
+  margin-top: 10px;
+}
+
 .postAndComments {
   float: right;
   width: 90%;
@@ -110,11 +125,6 @@ body {
   flex-direction: row;
 }
 
-.sendButton{
-  font-family: "Sansita";
-  font-weight: bold;
-}
-
 .commentMessage {
   border-style: solid;
   padding: 15px;
@@ -133,33 +143,6 @@ body {
 
 .thumbsDownButton, #postMicButton {
   color: red;
-}
-
-#postPicButton {
-  color: blue;
-}
-
-.usernames {
-  padding-bottom: 30px;
-  font-size: 40px;
-  float: left;
-  padding-left: 10px;
-  margin-left: -40px;
-  display: inline-block;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  width: 180px;
-  /* padding: 60px 0 0; */
-  border: none;
-  /* font: normal 40px/0.65 "Squada One", Helvetica, sans-serif; */
-  font-family: "Concert One", cursive;
-  color: black;
-  text-align: center;
-  -o-text-overflow: clip;
-  text-overflow: clip;
-  text-shadow: 8px 5px 0 rgba(188, 188, 188, 1);
-  margin-top: 10px;
 }
 
 @media screen and (max-width: 600px) {
@@ -182,45 +165,6 @@ body {
   display: flex;
   position: fixed;
   bottom: 0;
-}
-
-.forumTopicsList {
-  display: flex;
-  text-align: center;
-  flex-wrap: nowrap;
-  z-index: 1;
-  background: #fa8072;
-  font-size: 20px;
-}
-
-#forumTopicsListTitle {
-  text-decoration: underline;
-  color: black;
-  font-weight: bold;
-  font-family: "Oleo Script";
-  padding: 10px;
-}
-
-/* padding: top right bottom left */
-#forumTopic {
-  padding: 11px;
-  text-decoration: none;
-  color: black;
-  display: block;
-  font-family: "Oleo Script";
-  float: right;
-  width: 100%;
-}
-
-/* Clear floats after the columns */
-.forumTopicsList:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-#forumTopic:hover {
-  color: #064579;
 }
 
 #postFooter {
@@ -252,4 +196,53 @@ body {
   font-size: 24px;
   color: purple;
   padding-right: 12px;
+}
+
+.sendButton{
+  font-family: "Sansita";
+  font-weight: bold;
+  font-size: 21px;
+}
+
+#postPicButton {
+  color: blue;
+}
+
+.forumTopicsList {
+  display: flex;
+  text-align: center;
+  flex-wrap: nowrap;
+  z-index: 1;
+  background: #fa8072;
+  font-size: 20px;
+}
+
+/* Clear floats after the columns */
+.forumTopicsList:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#forumTopicsListTitle {
+  text-decoration: underline;
+  color: black;
+  font-weight: bold;
+  font-family: "Oleo Script";
+  padding: 10px;
+}
+
+/* padding: top right bottom left */
+#forumTopic {
+  padding: 11px;
+  text-decoration: none;
+  color: black;
+  display: block;
+  font-family: "Oleo Script";
+  float: right;
+  width: 100%;
+}
+
+#forumTopic:hover {
+  color: #064579;
 }
