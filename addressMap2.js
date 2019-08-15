@@ -63,8 +63,15 @@ $(document).ready(function main() {
             }
 
         SendMapQuestGeocodingAjaxRequest();
-        PrepareForNewSubmission();
-        window.scrollTo(0, 0);
+        
+        var ShouldAjaxStop = false; //fixes the weird looping of .ajaxStop()
+        $(document).ajaxStop(function () {
+            if (ShouldAjaxStop) return;
+            ShouldAjaxStop = true;
+
+            PrepareForNewSubmission();
+            window.scrollTo(0, 0);
+        });
     });
 
 });
@@ -74,10 +81,13 @@ $(document).ready(function main() {
 //for deployment, this function would be unnecessary if you can directly get the hotel lat lng coordinates from a database
 function SendMapQuestGeocodingAjaxRequest(Street, City, State, ZipCode) {
     var MapQuestObj = {
-        "key": "6fRmDXDdGyRyHQVzNWpSCRlK6P0F3xAZ",
+        "key": "kmtHkT1S4hJHNSUcNoAeegMZtwfgCWfb",
         "location": [Street, City, State, ZipCode].join(", ")
     };
     $.ajax({
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        },
         url: `https://www.mapquestapi.com/geocoding/v1/address?${$.param(MapQuestObj)}`,
         success: function GetLatLong(json) {
             coord = Object.values(json.results[0].locations[0].latLng);
