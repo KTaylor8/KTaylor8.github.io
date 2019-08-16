@@ -27,7 +27,7 @@ $(document).ready(function main() {
         document.getElementById("SubmitBtn").innerHTML = 'Submit';
     }
 
-    var url = window.location.href;
+    // var url = window.location.href;
     PrepopulateFormFrance();
 
     // $(".DatePickerOptions").datepicker({
@@ -62,21 +62,74 @@ $(document).ready(function main() {
                 return;
             }
 
-        SendMapQuestGeocodingAjaxRequest();
+        // SendMapQuestGeocodingAjaxRequest();
         
-        var ShouldAjaxStop = false; //fixes the weird looping of .ajaxStop()
-        $(document).ajaxStop(function () {
-            if (ShouldAjaxStop) return;
-            ShouldAjaxStop = true;
+        // var ShouldAjaxStop = false; //fixes the weird looping of .ajaxStop()
+        // $(document).ajaxStop(function () {
+        //     if (ShouldAjaxStop) return;
+        //     ShouldAjaxStop = true;
+
+            displayLeafletMap();
 
             PrepareForNewSubmission();
             window.scrollTo(0, 0);
-        });
+        // });
     });
 
 });
 
 // FUNCTION DEFINITIONS ------------------------------------------------------------------------
+
+function displayLeafletMap() {
+    var HotelCoord = [108, 32];
+    var EventCoord = [108.2, 32];
+
+    var map = InitMap(HotelCoord, EventCoord);
+
+    InitMarkersAndPopups(HotelCoord, EventCoord, map, dist);
+
+    InitTiles(map);
+
+    function InitMap(HotelCoord, EventCoord) {
+        var InitialZoom = 17;
+        var map = L.map('leafletMapId').setView(HotelCoord, InitialZoom);
+        var EventInBounds = map.getBounds().contains(EventCoord);
+        while (EventInBounds !== true) {
+            if (EventInBounds !== true) { //zoom increments of 0.5 cause too many get requests for tiles b/c instances of calls are doubled & tiles don't load
+                map.zoomOut(1); //zoomOut() Only works after setView(), and before setting markers and tileLayer()
+                EventInBounds = map.getBounds().contains(EventCoord);
+            }
+        }
+        return map;
+    }
+
+    function InitMarkersAndPopups(HotelCoord, EventCoord, map, dist) {
+        var HotelMarker = L.marker(HotelCoord).addTo(map); //markers and popups need to be initialized after the automatic zooming, otherwise the map center shifts weirdly
+        var EventMarker = L.marker(EventCoord).addTo(map);
+        var HotelPopup = L.popup({
+            closeOnClick: false,
+            autoClose: false
+        }).setContent("<b>This is your hotel.</b>").setLatLng(HotelCoord).addTo(map);
+        var EventPopup = L.popup({
+            closeOnClick: false,
+            autoClose: false
+        }).setContent(`${dist} mi from your hotel`).setLatLng(EventCoord).addTo(map);
+    }
+
+    function InitTiles(map) {
+        var MapBoxAccessToken = "sk.eyJ1IjoibmluamFidW5ueTgiLCJhIjoiY2p4dzdybWgwMDEwaTNsbndjNTFscDg3eiJ9.AaZdhJ0HzSIWbVrlridrVQ";
+        var attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>';
+        L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${MapBoxAccessToken}`, {
+            attribution: attribution,
+            maxZoom: 20,
+            minZoom: 1,
+            id: 'mapbox.streets',
+            accessToken: MapBoxAccessToken
+        }).addTo(map);
+    }
+}
 
 //for deployment, this function would be unnecessary if you can directly get the hotel lat lng coordinates from a database
 function SendMapQuestGeocodingAjaxRequest(Street, City, State, ZipCode) {

@@ -108,6 +108,24 @@ label {
     font-size: 17px;
 }
 
+
+
+#leafletMapId {
+    height: 70%;
+    width: 73%;
+    margin-top: 40px;
+}
+
+.leaflet-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.leaflet-popup-tip {
+    background: rgba(0, 0, 0, 0) !important;
+    box-shadow: none !important;
+}
+
 /*display for text after you click on read more*/
 /* .LongText {
     display: none;
