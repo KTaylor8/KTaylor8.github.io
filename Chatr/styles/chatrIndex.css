@@ -6,7 +6,7 @@ body {
 }
 
 body {
-  background-image: url(images/jade.jpg);
+  background-image: url(backgrounds/jade.jpg);
   display: flex;
   flex-direction: column;
 }

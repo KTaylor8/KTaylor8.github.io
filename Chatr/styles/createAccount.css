@@ -4,7 +4,7 @@ body {
 }
 
 body {
-  background-image: url(images/bunting-flag.png);
+  background-image: url(backgrounds/bunting-flag.png);
   display: flex;
   flex-direction: column;
   font-family: "Bree Serif";

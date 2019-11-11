@@ -8,7 +8,7 @@ body {
 }
 
 body {
-  background-image: url(images/green.jpg);
+  background-image: url(backgrounds/green.jpg);
   display: flex;
   flex-direction: column;
   font-family: "Bree Serif";

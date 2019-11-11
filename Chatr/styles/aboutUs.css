@@ -11,7 +11,7 @@ html, body {
 }
 
 body {
-  background-image: url(images/wild-sea.png);
+  background-image: url(backgrounds/wild-sea.png);
   display: flex;
   flex-direction: column;
 }
