@@ -1,4 +1,4 @@
-# Snippets from Expedia Software Development Apprenticeship Project
+# Code Snippets from Expedia Software Development Apprenticeship Project
 
 During the summer of 2019, I collaborated with another Apprentice within the Omni-Channel Communications (OCC) team to design and develop the initial stages of a system to help customers easily find events near their hotel and promote Expedia’s Things To Do. In our system, a target segment of customers that book a hotel will trigger an SMS/push notification that includes contains a deep link to a webpage with events near their hotel. The events are able to be sorted by distance, rating, or price. For each event, the customer is able to purchase tickets, map out the location of their event in relation to their hotel, and read other customers’ reviews among other options.
 
